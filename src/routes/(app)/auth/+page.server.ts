@@ -51,8 +51,6 @@ export const actions: Actions = {
 				error: 'Server error. Try again later.'
 			});
 		}
-
-		throw redirect(303, '/');
 	},
 	signin: async (event) => {
 		const form = await superValidate(event, signinSchema);
@@ -82,7 +80,5 @@ export const actions: Actions = {
 				error: 'Server error. Try again later.'
 			});
 		}
-
-		throw redirect(303, '/');
 	}
 };

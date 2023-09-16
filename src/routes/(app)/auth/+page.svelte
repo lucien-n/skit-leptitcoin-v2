@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import * as Alert from '$components/ui/alert';
 	import * as Card from '$components/ui/card';
 	import * as Tabs from '$components/ui/tabs';
@@ -8,6 +10,10 @@
 
 	export let data: PageData;
 	export let form: any;
+
+	const gotoHome = () => {
+		if (browser) goto('/', { invalidateAll: true, replaceState: true });
+	};
 </script>
 
 <section class="w-full h-full flex justify-center items-center">
@@ -27,14 +33,14 @@
 			<Tabs.Content value="signup">
 				<Card.Root class="w-full">
 					<Card.Content>
-						<SignupForm form={data.signupForm} />
+						<SignupForm form={data.signupForm} on:success={gotoHome} />
 					</Card.Content>
 				</Card.Root>
 			</Tabs.Content>
 			<Tabs.Content value="signin">
 				<Card.Root class="w-full">
 					<Card.Content>
-						<SigninForm form={data.signinForm} />
+						<SigninForm form={data.signinForm} on:success={gotoHome} />
 					</Card.Content>
 				</Card.Root>
 			</Tabs.Content>

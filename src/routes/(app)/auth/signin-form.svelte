@@ -3,15 +3,22 @@
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { signinSchema, type SigninSchema } from './schema';
 	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { createEventDispatcher } from 'svelte';
 
 	export let form: SuperValidated<SigninSchema>;
 
+	const dispatch = createEventDispatcher();
+
 	let loading = false;
 
-	const handleSubmit = () => {
+	const handleSubmit: SubmitFunction = () => {
 		loading = true;
-		return async () => {
+
+		return async ({ result }) => {
 			loading = false;
+			console.log(result);
+			dispatch(result.type);
 		};
 	};
 </script>
