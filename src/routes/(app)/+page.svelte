@@ -1,2 +1,27 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import type { PageData } from './$types';
+	import * as Alert from '$components/ui/alert';
+	import Listing from './listing.svelte';
+
+	export let data: PageData;
+
+	const {
+		streamed: { listingsPromise }
+	} = data;
+</script>
+
+{#await listingsPromise}
+	<p>Fetching listings</p>
+{:then { data: listings, error }}
+	{#if error}
+		<Alert.Root>
+			<Alert.Title class="font-semibold">Error</Alert.Title>
+			<Alert.Description>{error}</Alert.Description>
+		</Alert.Root>
+	{/if}
+	{#if listings}
+		{#each listings as listing}
+			<Listing {listing} />
+		{/each}
+	{/if}
+{/await}
