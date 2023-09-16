@@ -7,7 +7,9 @@
 </script>
 
 <DropdownMenu.Root>
-	<DropdownMenu.Trigger class="flex items-center gap-1"><UserIcon /> Profile</DropdownMenu.Trigger>
+	<DropdownMenu.Trigger class="flex items-center gap-1"
+		><UserIcon /> <span class="hidden md:flex">Profile</span></DropdownMenu.Trigger
+	>
 	<DropdownMenu.Content>
 		<DropdownMenu.Group>
 			<DropdownMenu.Label>{user.id}</DropdownMenu.Label>

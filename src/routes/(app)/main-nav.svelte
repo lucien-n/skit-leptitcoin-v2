@@ -9,13 +9,15 @@
 </script>
 
 <div class="border-b p-3 shadow-md sticky">
-	<nav class="flex items-center w-[60%] mx-auto space-x-6 text-lg font-medium justify-between">
+	<nav
+		class="flex items-center w-full lg:w-[80%] xl:w-[70%] 3xl:w-[60%] mx-auto md:space-x-6 text-lg font-medium justify-between"
+	>
 		<div class="flex items-center">
 			<NavLink href="/">
 				<svelte:fragment slot="icon">
 					<HomeIcon />
 				</svelte:fragment>
-				<strong> Home </strong>
+				<strong class="hidden md:flex"> Home </strong>
 			</NavLink>
 		</div>
 		<NavSearch />
@@ -27,7 +29,7 @@
 					<svelte:fragment slot="icon">
 						<LogInIcon />
 					</svelte:fragment>
-					Sign In
+					<span class="hidden md:flex"> Sign In </span>
 				</NavLink>
 			{/if}
 		</div>
