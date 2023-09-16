@@ -1,10 +1,16 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import * as Alert from '$components/ui/alert';
+	import * as Card from '$components/ui/card';
 	import type { PageData } from './$types';
 	import NewForm from './new-form.svelte';
 
 	export let data: PageData;
 	export let form: any;
+
+	const gotoListing = () => {
+		if (form.uid) goto(`/listing/${form.uid}`);
+	};
 </script>
 
 <section class="w-full h-full flex justify-center items-center">
@@ -15,6 +21,10 @@
 				<Alert.Description>{form.error.message || form.error}</Alert.Description>
 			</Alert.Root>
 		{/if}
-		<NewForm form={data.form} />
+		<Card.Root class="w-full">
+			<Card.Content>
+				<NewForm form={data.form} on:success={gotoListing} />
+			</Card.Content>
+		</Card.Root>
 	</div>
 </section>

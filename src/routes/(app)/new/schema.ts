@@ -9,8 +9,8 @@ export const newSchema = z.object({
 		.string()
 		.min(3, 'The description must be at least 3 characters long')
 		.max(500, 'The description cannot be longer than 500 characters'),
-	category: z.string(),
-	condition: z.preprocess((val) => Number(val), z.number().min(0).max(4))
+	category: z.string().min(1).max(50),
+	condition: z.string().min(1).max(1)
 });
 
 export type NewSchema = typeof newSchema;

@@ -82,7 +82,7 @@
 	];
 </script>
 
-<Form.Root schema={newSchema} {form} let:config debug>
+<Form.Root schema={newSchema} {form} let:config>
 	<form method="POST" use:enhance={handleSubmit} class="flex flex-col gap-2">
 		<Form.Field {config} name="title">
 			<Form.Item>
@@ -106,7 +106,7 @@
 					placeholder="Authentic leather
 Easily fits 3 people
 Armrests
-One little scratch on the exterior left side"
+One little scratch on the left side"
 					minlength={3}
 					maxlength={500}
 					rows={6}
@@ -152,5 +152,6 @@ One little scratch on the exterior left side"
 				<Form.Validation />
 			</Form.Item>
 		</Form.Field>
+		<Form.Button disabled={loading}>{loading ? 'Creating' : 'Create'}</Form.Button>
 	</form>
 </Form.Root>
