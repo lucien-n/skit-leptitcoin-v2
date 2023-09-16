@@ -1,5 +1,5 @@
 <script>
-	import '../app.postcss';
+	import '../../app.postcss';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 
