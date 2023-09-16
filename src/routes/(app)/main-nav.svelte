@@ -1,9 +1,10 @@
 <script lang="ts">
 	import type { Session } from '@supabase/supabase-js';
-	import { HomeIcon, LogInIcon } from 'lucide-svelte';
+	import { HomeIcon, LogInIcon, PlusIcon } from 'lucide-svelte';
 	import NavLink from './nav-link.svelte';
 	import NavSearch from './nav-search.svelte';
 	import NavUserDropdown from './nav-user-dropdown.svelte';
+	import { Separator } from '$components/ui/separator';
 
 	export let session: Session | null;
 </script>
@@ -21,8 +22,15 @@
 			</NavLink>
 		</div>
 		<NavSearch />
-		<div class="flex items-center">
+		<div class="flex items-center space-x-1 md:space-x-2">
 			{#if session}
+				<NavLink href="/new">
+					<svelte:fragment slot="icon">
+						<PlusIcon />
+					</svelte:fragment>
+					<span class="hidden md:flex">New</span>
+				</NavLink>
+				<Separator orientation="vertical" />
 				<NavUserDropdown user={session.user} />
 			{:else}
 				<NavLink href="/auth">

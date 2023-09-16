@@ -13,7 +13,7 @@
 	{href}
 	class={cn(
 		'transition-colors hover:text-foreground/80 flex gap-x-1 items-center',
-		$page.url.pathname === href ? 'text-foreground underline' : 'text-foreground/60 no-underline',
+		$page.url.pathname === href ? 'text-foreground' : 'text-foreground/60 no-underline',
 		className
 	)}
 	target={external ? '_blank' : undefined}
