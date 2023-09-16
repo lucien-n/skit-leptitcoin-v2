@@ -4,7 +4,12 @@ import { signinSchema, signupSchema } from './schema';
 import type { PageServerLoad, Actions } from './$types';
 import { AuthApiError } from '@supabase/supabase-js';
 
-export const load: PageServerLoad = () => {
+export const load: PageServerLoad = async ({ locals: { getSession } }) => {
+	const session = await getSession();
+	if (session) {
+		throw redirect(303, '/');
+	}
+
 	return {
 		signupForm: superValidate(signupSchema, { id: 'signup-form' }),
 		signinForm: superValidate(signupSchema, { id: 'signin-form' })

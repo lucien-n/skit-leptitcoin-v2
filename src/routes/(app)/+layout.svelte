@@ -21,7 +21,7 @@
 </script>
 
 <main class="w-full h-full overflow-hidden flex flex-col">
-	<MainNav />
+	<MainNav {session} />
 	<section class="container h-full">
 		<slot />
 	</section>

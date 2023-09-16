@@ -1,38 +1,35 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { cn } from '$utils';
+	import type { Session } from '@supabase/supabase-js';
+	import { HomeIcon, LogInIcon } from 'lucide-svelte';
+	import NavLink from './nav-link.svelte';
+	import NavSearch from './nav-search.svelte';
+	import NavUserDropdown from './nav-user-dropdown.svelte';
 
-	type Link = { href: string; title: string; external: boolean; class?: string };
-
-	const links: Link[] = [
-		{
-			href: '/',
-			title: 'Home',
-			external: false,
-			class: 'font-bold'
-		}
-	];
+	export let session: Session | null;
 </script>
 
-<div class="border-b p-3 shadow-md">
-	<a href="/" class="mr-6 flex items-center space-x-2">
-		<!-- <Icons.logo class="h-6 w-6" /> -->
-		<span class="hidden font-bold sm:inline-block"> LePtitCoin </span>
-	</a>
-	<nav class="flex items-center w-[60%] mx-auto space-x-6 text-lg font-medium">
-		{#each links as link}
-			<a
-				href={link.href}
-				class={cn(
-					'transition-colors hover:text-foreground/80',
-					$page.url.pathname === link.href ? 'text-foreground underline' : 'text-foreground/60',
-					link.class
-				)}
-				target={link.external ? '_blank' : undefined}
-				rel={link.external ? 'noreferrer' : undefined}
-			>
-				{link.title}
-			</a>
-		{/each}
+<div class="border-b p-3 shadow-md sticky">
+	<nav class="flex items-center w-[60%] mx-auto space-x-6 text-lg font-medium justify-between">
+		<div class="flex items-center">
+			<NavLink href="/">
+				<svelte:fragment slot="icon">
+					<HomeIcon />
+				</svelte:fragment>
+				<strong> Home </strong>
+			</NavLink>
+		</div>
+		<NavSearch />
+		<div class="flex items-center">
+			{#if session}
+				<NavUserDropdown user={session.user} />
+			{:else}
+				<NavLink href="/auth">
+					<svelte:fragment slot="icon">
+						<LogInIcon />
+					</svelte:fragment>
+					Sign In
+				</NavLink>
+			{/if}
+		</div>
 	</nav>
 </div>
