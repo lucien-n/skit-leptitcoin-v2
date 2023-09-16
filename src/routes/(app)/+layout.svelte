@@ -2,6 +2,7 @@
 	import '../../app.postcss';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import MainNav from './main-nav.svelte';
 
 	export let data;
 
@@ -19,7 +20,8 @@
 	});
 </script>
 
-<main class="w-full h-full overflow-hidden">
+<main class="w-full h-full overflow-hidden flex flex-col">
+	<MainNav />
 	<section class="container h-full">
 		<slot />
 	</section>
