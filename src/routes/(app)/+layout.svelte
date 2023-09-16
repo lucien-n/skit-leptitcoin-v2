@@ -3,6 +3,8 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import MainNav from './main-nav.svelte';
+	import { navigating } from '$app/stores';
+	import Loading from './loading.svelte';
 
 	export let data;
 
@@ -19,6 +21,10 @@
 		return () => data.subscription.unsubscribe();
 	});
 </script>
+
+{#if $navigating}
+	<Loading />
+{/if}
 
 <main class="w-full h-full overflow-hidden flex flex-col gap-y-2">
 	<MainNav {session} />
