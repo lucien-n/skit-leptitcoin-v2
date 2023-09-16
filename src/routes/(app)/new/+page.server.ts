@@ -44,6 +44,8 @@ export const actions: Actions = {
 
 		const { data, error }: DbResult<typeof query> = await query;
 
+		console.log(data, error);
+
 		if (error)
 			return fail(500, {
 				error

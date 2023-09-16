@@ -17,7 +17,7 @@
 		loading = true;
 		return async ({ result }) => {
 			loading = false;
-			dispatch(result.type);
+			dispatch(result.type, result);
 		};
 	};
 

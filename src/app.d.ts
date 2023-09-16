@@ -10,6 +10,16 @@ declare global {
 		created_at: number;
 	};
 
+	type TListing = {
+		uid: string;
+		author_uid: string;
+		title: string;
+		description: string;
+		category: string;
+		condition: number;
+		created_at: number;
+	};
+
 	type TSupaProfile = Tables<'profiles'>;
 
 	type DbResult<T> = T extends PromiseLike<infer U> ? U : never;

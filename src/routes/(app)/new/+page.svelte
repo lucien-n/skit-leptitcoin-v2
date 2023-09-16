@@ -8,8 +8,9 @@
 	export let data: PageData;
 	export let form: any;
 
-	const gotoListing = () => {
-		if (form.uid) goto(`/listing/${form.uid}`);
+	const gotoListing = (event: any) => {
+		if (event.detail && event.detail.data && event.detail.data.uid)
+			goto(`/listing/${event.detail.data.uid}`);
 	};
 </script>
 
