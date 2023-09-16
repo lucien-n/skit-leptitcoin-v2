@@ -19,4 +19,8 @@
 	});
 </script>
 
-<slot />
+<main class="w-full h-full overflow-hidden">
+	<section class="container h-full">
+		<slot />
+	</section>
+</main>

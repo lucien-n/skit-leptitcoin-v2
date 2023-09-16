@@ -1,0 +1,43 @@
+<script lang="ts">
+	import * as Alert from '$components/ui/alert';
+	import * as Card from '$components/ui/card';
+	import * as Tabs from '$components/ui/tabs';
+	import type { PageData } from './$types';
+	import SigninForm from './signin-form.svelte';
+	import SignupForm from './signup-form.svelte';
+
+	export let data: PageData;
+	export let form: any;
+</script>
+
+<section class="w-full h-full flex justify-center items-center">
+	<div class="w-full md:w-2/3 lg:w-3/5 xl:w-2/5 gap-2 flex flex-col">
+		{#if form?.error}
+			<Alert.Root>
+				<Alert.Title class="font-semibold">Auth error</Alert.Title>
+				<Alert.Description>{form.error.message || form.error}</Alert.Description>
+			</Alert.Root>
+		{/if}
+
+		<Tabs.Root value="signup" class="">
+			<Tabs.List class="grid w-full grid-cols-2">
+				<Tabs.Trigger value="signup">Sign Up</Tabs.Trigger>
+				<Tabs.Trigger value="signin">Sign In</Tabs.Trigger>
+			</Tabs.List>
+			<Tabs.Content value="signup">
+				<Card.Root class="w-full">
+					<Card.Content>
+						<SignupForm form={data.signupForm} />
+					</Card.Content>
+				</Card.Root>
+			</Tabs.Content>
+			<Tabs.Content value="signin">
+				<Card.Root class="w-full">
+					<Card.Content>
+						<SigninForm form={data.signinForm} />
+					</Card.Content>
+				</Card.Root>
+			</Tabs.Content>
+		</Tabs.Root>
+	</div>
+</section>
