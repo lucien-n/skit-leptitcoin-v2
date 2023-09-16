@@ -2,10 +2,9 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ locals: { supabase, uid } }) => {
 	console.log(`Fetching '${uid}' profile`);
-	const { data, error } = await supabase
-		.from('profiles')
-		.select('name, created_at, avatar_url')
-		.match({ uid });
+	const query = supabase.from('profiles').select('name, created_at, avatar_url').match({ uid });
+
+	const { data, error }: DbResult<typeof query> = await query;
 
 	if (error)
 		return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });

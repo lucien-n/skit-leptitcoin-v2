@@ -1,12 +1,20 @@
+import type { Tables } from '$lib/database.types';
 import { SupabaseClient, Session } from '@supabase/supabase-js';
+import type { PostgrestError } from '@supabase/supabase-js';
 
 declare global {
 	type TProfile = {
-		uid: string,
-		name: string,
-		avatar_url: string,
-		created_at: number
-	}
+		uid: string;
+		name: string;
+		avatar_url: string;
+		created_at: number;
+	};
+
+	type TSupaProfile = Tables<'profiles'>;
+
+	type DbResult<T> = T extends PromiseLike<infer U> ? U : never;
+	type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never;
+	type DbResultErr = PostgrestError;
 
 	namespace App {
 		interface Locals {

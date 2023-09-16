@@ -9,7 +9,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"format": "prettier --plugin-search-dir . --write .",
+		"genTypes": "supabase gen types typescript --project-id eltbstyqcbdmrdozmrca > ./src/lib/database-generated.types.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -42,6 +43,7 @@
 		"formsnap": "^0.1.2",
 		"lucide-svelte": "^0.279.0",
 		"tailwind-merge": "^1.14.0",
-		"tailwind-variants": "^0.1.14"
+		"tailwind-variants": "^0.1.14",
+		"type-fest": "^4.3.1"
 	}
 }
