@@ -20,7 +20,7 @@
 	});
 </script>
 
-<main class="w-full h-full overflow-hidden flex flex-col">
+<main class="w-full h-full overflow-hidden flex flex-col gap-y-2">
 	<MainNav {session} />
 	<section class="container h-full">
 		<slot />

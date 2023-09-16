@@ -12,7 +12,9 @@
 		<DropdownMenu.Group>
 			<DropdownMenu.Label>{user.id}</DropdownMenu.Label>
 			<DropdownMenu.Separator />
-			<DropdownMenu.Item>Profile</DropdownMenu.Item>
+			<DropdownMenu.Item>
+				<a href="/profile/{user.id}" class="w-full">Profile</a>
+			</DropdownMenu.Item>
 			<DropdownMenu.Item>
 				<a href="/auth/signout" class="flex gap-1 items-center w-full" data-sveltekit-reload>
 					<LogOutIcon /> Sign Out
