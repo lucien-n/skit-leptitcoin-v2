@@ -8,7 +8,7 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params }) => {
 
 	if (uid_or_username.length === 36) uid = uid_or_username;
 	else name = uid_or_username;
-	console.log(uid ? { uid } : { name });
+
 	const query = supabase
 		.from('profiles')
 		.select('uid, name, created_at, avatar_url')

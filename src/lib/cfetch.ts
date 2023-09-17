@@ -6,7 +6,7 @@ const cfetch = async (
 	fetch: Fetch,
 	options?: object
 ): Promise<{
-	data: Array<object | unknown>;
+	data: Array<never>;
 	error: string;
 }> => {
 	const res = await fetch(url, { method, ...options });
