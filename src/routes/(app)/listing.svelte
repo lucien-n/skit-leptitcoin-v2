@@ -1,16 +1,10 @@
 <script lang="ts">
+	import ConditionBadge from '$components/lpc/condition-badge.svelte';
 	import * as Card from '$components/ui/card';
 	import { AspectRatio } from '$lib/components/ui/aspect-ratio';
 	import { formatDate } from '$lib/helper';
-	import { CONDITIONS } from '$lib/types';
 
 	export let listing: TListing;
-
-	const getConditionText = () => {
-		let text = '';
-		text = CONDITIONS.filter((condition) => condition.value == listing.condition)[0].label;
-		return text;
-	};
 </script>
 
 <Card.Root class="grid grid-cols-5 group">
@@ -29,11 +23,11 @@
 				{listing.title}
 			</h1>
 			<p class="text-lg">{listing.price}€</p>
+			<ConditionBadge condition={listing.condition} />
 		</a>
 		<div class="block">
 			<a class="font-bold underline" href="/profile/{listing.author.name}">{listing.author.name}</a>
 			-
-			{getConditionText()}
 			{formatDate(listing.created_at)}
 		</div>
 	</Card.Content>
