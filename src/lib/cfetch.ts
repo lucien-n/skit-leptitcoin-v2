@@ -11,8 +11,20 @@ const cfetch = async (
 }> => {
 	const res = await fetch(url, { method, ...options });
 
-	if (!res.ok)
-		return { data: [], error: `[${res.status}] <${method}> '${url}': ${res.statusText}` };
+	if (!res.ok) {
+		let error;
+		try {
+			const data = await res.json();
+			error = data.error.message;
+		} catch (e) {
+			/* empty */
+		}
+
+		return {
+			data: [],
+			error: `[${res.status}] <${method}> '${url}'${error ? ' => ' + error : ''}`
+		};
+	}
 
 	const { data, error } = await res.json();
 

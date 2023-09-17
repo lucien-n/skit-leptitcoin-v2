@@ -12,7 +12,10 @@ declare global {
 
 	type TListing = {
 		uid: string;
-		author_uid: string;
+		author: {
+			uid: string;
+			name: string;
+		};
 		title: string;
 		description: string;
 		category: string;
@@ -21,6 +24,7 @@ declare global {
 	};
 
 	type TSupaProfile = Tables<'profiles'>;
+	type TSupaListing = Tables<'listings'>;
 
 	type DbResult<T> = T extends PromiseLike<infer U> ? U : never;
 	type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never;

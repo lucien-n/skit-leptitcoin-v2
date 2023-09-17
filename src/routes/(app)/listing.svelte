@@ -30,12 +30,10 @@
 			</div>
 		</a>
 		<div class="block">
-			<a class="font-bold underline" href="/profile/{listing.author_uid}">{listing.author_uid}</a>
+			<a class="font-bold underline" href="/profile/{listing.author.name}">{listing.author.name}</a>
 			-
 			{getConditionText()}
 			{formatDate(listing.created_at)}
 		</div>
 	</Card.Content>
 </Card.Root>
-
-<div />

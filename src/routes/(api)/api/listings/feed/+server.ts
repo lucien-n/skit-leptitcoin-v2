@@ -3,7 +3,9 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const GET: RequestHandler = async ({ locals: { supabase } }) => {
 	const query = supabase
 		.from('listings')
-		.select('uid, author_uid, title, description, category, condition, created_at')
+		.select(
+			'uid, author_uid, title, description, category, condition, created_at, author:profiles(author_uid:uid, name)'
+		)
 		.range(0, 15);
 
 	const { data, error }: DbResult<typeof query> = await query;
@@ -15,9 +17,18 @@ export const GET: RequestHandler = async ({ locals: { supabase } }) => {
 	const listings: TListing[] = [];
 
 	for (const listing_data of data) {
+		const author_data = listing_data.author;
+
+		const author = {
+			// @ts-expect-error: Typescript for some reasons thinks that the returned object is a list
+			uid: author_data.author_uid || 'unknown',
+			// @ts-expect-error: Typescript for some reasons thinks that the returned object is a list
+			name: author_data.name || 'Unknown'
+		};
+
 		const listing = {
 			uid: listing_data.uid,
-			author_uid: listing_data.author_uid,
+			author,
 			title: listing_data.title,
 			description: listing_data.description,
 			category: listing_data.category,
