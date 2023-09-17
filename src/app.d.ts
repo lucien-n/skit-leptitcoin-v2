@@ -16,6 +16,7 @@ declare global {
 			uid: string;
 			name: string;
 		};
+		price: number;
 		title: string;
 		description: string;
 		category: string;

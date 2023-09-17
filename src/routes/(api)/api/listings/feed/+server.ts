@@ -4,7 +4,7 @@ export const GET: RequestHandler = async ({ locals: { supabase } }) => {
 	const query = supabase
 		.from('listings')
 		.select(
-			'uid, author_uid, title, description, category, condition, created_at, author:profiles(author_uid:uid, name)'
+			'uid, price, title, description, category, condition, created_at, author:profiles(author_uid:uid, name)'
 		)
 		.range(0, 15);
 
@@ -29,6 +29,7 @@ export const GET: RequestHandler = async ({ locals: { supabase } }) => {
 		const listing = {
 			uid: listing_data.uid,
 			author,
+			price: listing_data.price,
 			title: listing_data.title,
 			description: listing_data.description,
 			category: listing_data.category,
