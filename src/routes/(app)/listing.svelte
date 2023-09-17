@@ -24,10 +24,11 @@
 		</AspectRatio>
 	</Card.Header>
 	<Card.Content class="col-span-3 pl-2 h-full group-hover:cursor-pointer">
-		<a class="block h-full text-xl" href="/listing/{listing.uid}">
-			<div class="flex group-hover:text-primary font-semibold">
+		<a class="block h-full" href="/listing/{listing.uid}">
+			<h1 class="flex group-hover:text-primary font-semibold text-xl">
 				{listing.title}
-			</div>
+			</h1>
+			<p class="text-lg">{listing.price}€</p>
 		</a>
 		<div class="block">
 			<a class="font-bold underline" href="/profile/{listing.author.name}">{listing.author.name}</a>
