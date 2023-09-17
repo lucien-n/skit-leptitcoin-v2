@@ -16,11 +16,14 @@ export const GET: RequestHandler = async ({ locals: { supabase, uid } }) => {
 
 	if (!listing_data) return new Response(null, { status: 204 });
 
-	const author = {
-		uid: listing_data.author[0].author_uid,
-		name: listing_data.author[0].name
-	};
+	const author_data = listing_data.author;
 
+	const author = {
+		// @ts-expect-error: Typescript for some reasons thinks that the returned object is a list
+		uid: author_data.author_uid || 'unknown',
+		// @ts-expect-error: Typescript for some reasons thinks that the returned object is a list
+		name: author_data.name || 'Unknown'
+	};
 	const listing = {
 		uid: listing_data.uid,
 		author,
