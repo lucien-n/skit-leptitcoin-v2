@@ -28,7 +28,7 @@
 
 <main class="w-full h-full overflow-hidden flex flex-col gap-y-2">
 	<MainNav {session} />
-	<section class="container h-full">
+	<section class="container h-max">
 		<slot />
 	</section>
 </main>

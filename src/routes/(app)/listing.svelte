@@ -17,17 +17,23 @@
 			/>
 		</AspectRatio>
 	</Card.Header>
-	<Card.Content class="col-span-3 pl-2 h-full group-hover:cursor-pointer">
-		<a class="block h-full" href="/listing/{listing.uid}">
+	<Card.Content
+		class="col-span-3 pl-2 p-3 flex-col flex justify-between h-full group-hover:cursor-pointer"
+	>
+		<a class="flex flex-col w-full h-full" href="/listing/{listing.uid}">
 			<h1 class="flex group-hover:text-primary font-semibold text-xl">
 				{listing.title}
 			</h1>
 			<p class="text-lg">{listing.price}€</p>
-			<ConditionBadge condition={listing.condition} />
+			<span>
+				<ConditionBadge condition={listing.condition} />
+			</span>
 		</a>
-		<div class="block">
-			<a class="font-bold underline" href="/profile/{listing.author.name}">{listing.author.name}</a>
-			-
+		<div class="flex flex-col">
+			<a
+				class="font-semibold hover:underline hover:text-primary"
+				href="/profile/{listing.author.name}">{listing.author.name}</a
+			>
 			{formatDate(listing.created_at)}
 		</div>
 	</Card.Content>

@@ -10,7 +10,7 @@
 	} = data;
 </script>
 
-<section class="flex flex-col gap-2 h-full overflow-y-hidden">
+<section class="flex flex-col gap-2 h-fit overflow-y-scroll">
 	{#await listingsPromise}
 		<p>Fetching listings</p>
 	{:then { data: listings, error }}
