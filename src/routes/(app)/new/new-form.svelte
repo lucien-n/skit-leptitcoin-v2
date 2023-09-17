@@ -6,6 +6,7 @@
 	import * as Form from '$components/ui/form';
 	import { enhance } from '$app/forms';
 	import * as Select from '$components/ui/select';
+	import { CATEGORIES, CONDITIONS } from '$lib/types';
 
 	export let form: SuperValidated<NewSchema>;
 
@@ -20,66 +21,6 @@
 			dispatch(result.type, result);
 		};
 	};
-
-	type Subcategory = {
-		value: string;
-		label: string;
-	};
-
-	type Category = {
-		name: string;
-		subcategories: Subcategory[];
-	};
-
-	const categories: Category[] = [
-		{
-			name: 'Automotives',
-			subcategories: [
-				{ value: 'scooters', label: 'Scooters' },
-				{ value: 'motorcycles', label: 'Motorcyles' },
-				{ value: '4x4-car', label: '4x4 Car' },
-				{ value: '2-wheel-drive-car', label: '2 Wheel Drive Car' }
-			]
-		},
-		{
-			name: 'Multimedia',
-			subcategories: [
-				{ value: 'game-console', label: 'Game Consoles' },
-				{ value: 'parts', label: 'Parts' },
-				{ value: 'computers', label: 'Computers' },
-				{ value: 'peripherals', label: 'Peripherals' },
-				{ value: 'household-appliances', label: 'Household Appliances' }
-			]
-		}
-	];
-
-	type Condition = {
-		value: number;
-		label: string;
-	};
-
-	const conditions: Condition[] = [
-		{
-			value: 0,
-			label: 'For Parts'
-		},
-		{
-			value: 1,
-			label: 'Satisfactory state'
-		},
-		{
-			value: 2,
-			label: 'Good state'
-		},
-		{
-			value: 3,
-			label: 'Very good state'
-		},
-		{
-			value: 4,
-			label: 'Brand new'
-		}
-	];
 </script>
 
 <Form.Root schema={newSchema} {form} let:config>
@@ -122,7 +63,7 @@ One little scratch on the left side"
 				<Form.Select>
 					<Select.Trigger>Category</Select.Trigger>
 					<Select.Content>
-						{#each categories as category}
+						{#each CATEGORIES as category}
 							<Select.Group>
 								<Select.Label>{category.name}</Select.Label>
 								{#each category.subcategories as subcategory}
@@ -144,7 +85,7 @@ One little scratch on the left side"
 				<Form.Select>
 					<Select.Trigger>State</Select.Trigger>
 					<Select.Content>
-						{#each conditions as condition}
+						{#each CONDITIONS as condition}
 							<Select.Item value={condition.value.toString()}>{condition.label}</Select.Item>
 						{/each}
 					</Select.Content>
