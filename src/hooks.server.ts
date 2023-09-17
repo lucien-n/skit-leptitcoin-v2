@@ -21,7 +21,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	};
 
 	if (url.pathname.startsWith('/api/')) {
-		if (params.uid) {
+		if (params.uid && !url.searchParams.has('ignore-check')) {
 			const { uid, response } = checkUid(params.uid);
 			if (response)
 				return new Response(JSON.stringify({ error: 'Please provide a valid uid' }), {

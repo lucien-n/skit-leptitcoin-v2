@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ params, fetch }) => {
 	const uid = params.uid;
 
-	const { data, error } = await cfetch(`/api/users/${uid}/profile`, 'GET', fetch);
+	const { data, error } = await cfetch(`/api/users/${uid}/profile?ignore-check`, 'GET', fetch);
 
 	const profile_data = data?.[0];
 
