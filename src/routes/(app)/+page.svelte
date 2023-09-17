@@ -10,18 +10,20 @@
 	} = data;
 </script>
 
-{#await listingsPromise}
-	<p>Fetching listings</p>
-{:then { data: listings, error }}
-	{#if error}
-		<Alert.Root>
-			<Alert.Title class="font-semibold">Error</Alert.Title>
-			<Alert.Description>{error}</Alert.Description>
-		</Alert.Root>
-	{/if}
-	{#if listings}
-		{#each listings as listing}
-			<Listing {listing} />
-		{/each}
-	{/if}
-{/await}
+<section class="flex flex-col gap-2 h-full overflow-y-hidden">
+	{#await listingsPromise}
+		<p>Fetching listings</p>
+	{:then { data: listings, error }}
+		{#if error}
+			<Alert.Root>
+				<Alert.Title class="font-semibold">Error</Alert.Title>
+				<Alert.Description>{error}</Alert.Description>
+			</Alert.Root>
+		{/if}
+		{#if listings}
+			{#each listings as listing}
+				<Listing {listing} />
+			{/each}
+		{/if}
+	{/await}
+</section>
