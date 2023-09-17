@@ -1,14 +1,24 @@
-export function formatDate(milliseconds: number): string {
-	const date = new Date(milliseconds);
+export const formatDate = (date_value: Date | number | string): string => {
+	const date = new Date(date_value);
 
-	const month = date.toLocaleString('default', { month: 'short' });
-	const day = date.getDate();
-	const hours = date.getHours();
-	const minutes = date.getMinutes();
+	const now = new Date();
+	const yesterday = new Date();
+	yesterday.setDate(now.getDate() - 1);
 
-	const formatted_date = `${month} ${day} ${hours.toString().padStart(2, '0')}h${minutes
-		.toString()
-		.padStart(2, '0')}`;
+	const diff = now.getTime() - date.getTime();
+	const minutesAgo = Math.floor(diff / (1000 * 60));
+	const hoursAgo = Math.floor(minutesAgo / 60);
+	const daysAgo = Math.floor(hoursAgo / 24);
 
-	return formatted_date;
-}
+	if (date.toLocaleDateString() == now.toLocaleDateString())
+		return `Today at ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+	else if (date.toLocaleDateString() == yesterday.toLocaleDateString())
+		return `Yesterday at ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+	else if (daysAgo < 7) return `${daysAgo + 1} days ago`;
+	else if (daysAgo >= 7 && daysAgo < 14) return 'A week ago';
+
+	return date.toLocaleDateString('en-US', {
+		day: 'numeric',
+		month: 'long'
+	});
+};
