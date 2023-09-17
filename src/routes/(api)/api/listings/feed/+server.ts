@@ -1,12 +1,15 @@
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ locals: { supabase } }) => {
-	const query = supabase
+export const GET: RequestHandler = async ({ locals: { supabase }, url: { searchParams } }) => {
+	const param = searchParams.get('q');
+
+	let query = supabase
 		.from('listings')
 		.select(
 			'uid, price, title, description, category, condition, created_at, author:profiles(author_uid:uid, name)'
 		)
 		.range(0, 15);
+	if (param) query = query.ilike('title', `%${param}%`);
 
 	const { data, error }: DbResult<typeof query> = await query;
 
