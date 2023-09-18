@@ -15,16 +15,6 @@
 	let { supabase, session, profile } = data;
 	$: ({ supabase, session, profile } = data);
 
-	let analyticsId = PUBLIC_VERCEL_PROJECT_ID;
-
-	$: if (browser && analyticsId) {
-		webVitals({
-			path: $page.url.pathname,
-			params: $page.params,
-			analyticsId
-		});
-	}
-
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
