@@ -2,8 +2,12 @@ import { PRIVATE_MODE } from '$env/static/private';
 
 const DEV: boolean = PRIVATE_MODE == 'DEV';
 
-const ROUTES_SETTINGS = {
+const CACHE_SETTINGS = {
 	'listings/listing': {
+		max_age: 300,
+		enabled: DEV
+	},
+	'listings/feed': {
 		max_age: 300,
 		enabled: DEV
 	},
@@ -13,14 +17,18 @@ const ROUTES_SETTINGS = {
 	}
 };
 
-type Route = keyof typeof ROUTES_SETTINGS;
+type Route = keyof typeof CACHE_SETTINGS;
 
 export const getHeaders = (route: Route) => {
-	const route_settings = ROUTES_SETTINGS[route];
+	const route_settings = CACHE_SETTINGS[route];
 
 	const headers: Record<string, string> = {};
 
 	if (route_settings.enabled) headers['Cache-Control'] = `max-age=${route_settings.enabled}`;
 
 	return headers;
+};
+
+export const getRouteExpiration = (route: Route) => {
+	return CACHE_SETTINGS[route].max_age;
 };

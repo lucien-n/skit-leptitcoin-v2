@@ -1,6 +1,13 @@
+import { getHeaders, getRouteExpiration } from '$lib/server/cache';
+import { redis } from '$lib/server/redis';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ locals: { supabase }, url: { searchParams } }) => {
+export const GET: RequestHandler = async ({
+	locals: { supabase },
+	url: { searchParams },
+	setHeaders
+}) => {
+	let headers = getHeaders('listings/feed');
 	const param = searchParams.get('q');
 
 	let query = supabase
@@ -20,6 +27,15 @@ export const GET: RequestHandler = async ({ locals: { supabase }, url: { searchP
 	const listings: TListing[] = [];
 
 	for (const listing_data of data) {
+		const cached = await redis.get(listing_data.uid);
+
+		if (cached) {
+			const ttl = await redis.ttl(listing_data.uid);
+			headers = { 'Cache-Control': `max-age=${ttl}` };
+			const listing = JSON.parse(cached);
+			if (listing satisfies TListing) listings.push(listing);
+		}
+
 		const author_data = listing_data.author;
 
 		const author = {
@@ -39,8 +55,20 @@ export const GET: RequestHandler = async ({ locals: { supabase }, url: { searchP
 			condition: listing_data.condition,
 			created_at: listing_data.created_at
 		} satisfies TListing;
+
 		listings.push(listing);
+
+		if (!cached) {
+			redis.set(
+				listing_data.uid,
+				JSON.stringify(listing),
+				'EX',
+				getRouteExpiration('listings/feed')
+			);
+		}
 	}
+
+	setHeaders(headers);
 
 	return new Response(JSON.stringify({ data: listings }), { status: 200 });
 };

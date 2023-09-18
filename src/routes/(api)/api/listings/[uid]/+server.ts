@@ -1,4 +1,4 @@
-import { getHeaders } from '$lib/server/cache';
+import { getHeaders, getRouteExpiration } from '$lib/server/cache';
 import { redis } from '$lib/server/redis';
 import type { RequestHandler } from '@sveltejs/kit';
 
@@ -47,7 +47,7 @@ export const GET: RequestHandler = async ({ locals: { supabase, uid }, setHeader
 		created_at: listing_data.created_at
 	} satisfies TListing;
 
-	redis.set(uid, JSON.stringify(listing), 'EX', 600);
+	redis.set(uid, JSON.stringify(listing), 'EX', getRouteExpiration('listings/listing'));
 
 	setHeaders(headers);
 
