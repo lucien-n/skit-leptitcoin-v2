@@ -1,13 +1,15 @@
 import { PRIVATE_MODE } from '$env/static/private';
 
+const DEV: boolean = PRIVATE_MODE == 'DEV';
+
 const ROUTES_SETTINGS = {
 	'listings/listing': {
 		max_age: 300,
-		enabled: PRIVATE_MODE == 'DEV'
+		enabled: DEV
 	},
 	'users/profile': {
 		max_age: 600,
-		enabled: PRIVATE_MODE == 'DEV'
+		enabled: DEV
 	}
 };
 
