@@ -27,10 +27,11 @@ export const GET: RequestHandler = async ({
 	const listings: TListing[] = [];
 
 	for (const listing_data of data) {
-		const cached = await redis.get(listing_data.uid);
+		const redis_key = 'listing:' + listing_data.uid;
+		const cached = await redis.get(redis_key);
 
 		if (cached) {
-			const ttl = await redis.ttl(listing_data.uid);
+			const ttl = await redis.ttl(redis_key);
 			headers = { 'Cache-Control': `max-age=${ttl}` };
 			const listing = JSON.parse(cached);
 			if (listing satisfies TListing) listings.push(listing);

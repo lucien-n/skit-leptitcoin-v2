@@ -5,10 +5,11 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const GET: RequestHandler = async ({ locals: { supabase, uid }, setHeaders }) => {
 	let headers = getHeaders('listings/listing');
 
-	const cached = await redis.get(uid);
+	const redis_key = 'listing:' + uid;
+	const cached = await redis.get(redis_key);
 
 	if (cached) {
-		const ttl = await redis.ttl(uid);
+		const ttl = await redis.ttl(redis_key);
 		headers = { 'Cache-Control': `max-age=${ttl}` };
 		return new Response(JSON.stringify({ data: [JSON.parse(cached)] }), { status: 200 });
 	}
