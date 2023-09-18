@@ -1,11 +1,8 @@
-import { CACHED_ROUTES } from '$lib/server/settings';
+import { getHeaders } from '$lib/server/cache';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ locals: { supabase, uid }, setHeaders }) => {
-	if (CACHED_ROUTES.listings.listing.enabled)
-		setHeaders({
-			'Cache-Control': `max-age=${CACHED_ROUTES.listings.listing.max_age}`
-		});
+	setHeaders(getHeaders('listings/listing'));
 
 	const query = supabase
 		.from('listings')
