@@ -6,6 +6,9 @@
 	import type { PageData } from './$types';
 	import Loading from './loading.svelte';
 	import MainNav from './main-nav.svelte';
+	import { titleStore } from '$lib/stores';
+	import { setTitle } from '$lib/helper';
+	import { PREFIX as SITE_NAME } from '$lib/constants';
 
 	export let data: PageData;
 
@@ -21,7 +24,15 @@
 
 		return () => data.subscription.unsubscribe();
 	});
+
+	onMount(() => {
+		setTitle('LePtitCoin');
+	});
 </script>
+
+<svelte:head>
+	<title>{$titleStore || SITE_NAME}</title>
+</svelte:head>
 
 {#if $navigating}
 	<Loading />

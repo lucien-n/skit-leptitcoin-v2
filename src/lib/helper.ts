@@ -1,3 +1,7 @@
+import { browser } from '$app/environment';
+import { PREFIX } from './constants';
+import { titleStore } from './stores';
+
 export const formatDate = (date_value: Date | number | string): string => {
 	const date = new Date(date_value);
 
@@ -21,4 +25,10 @@ export const formatDate = (date_value: Date | number | string): string => {
 		day: 'numeric',
 		month: 'long'
 	});
+};
+
+export const setTitle = (title: string, prefix: boolean = false) => {
+	if (!browser) return;
+	if (prefix) titleStore.set(PREFIX + ' - ' + title);
+	titleStore.set(title);
 };

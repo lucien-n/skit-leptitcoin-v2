@@ -45,3 +45,5 @@ const createProfileStore = (): ProfileStore => {
 };
 
 export const profileStore: ProfileStore = createProfileStore();
+
+export const titleStore = writable<string>('');
