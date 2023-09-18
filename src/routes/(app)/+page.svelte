@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { Svroller } from 'svrollbar';
-	import * as Alert from '$components/ui/alert';
-	import Listing from './listing.svelte';
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import * as Alert from '$components/ui/alert';
 	import cfetch from '$lib/cfetch';
-	import Separator from '$components/ui/separator/separator.svelte';
+	import { onMount } from 'svelte';
+	import Listing from './listing.svelte';
 
 	export let data;
 
