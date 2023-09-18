@@ -3,14 +3,27 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import MainNav from './main-nav.svelte';
-	import { navigating } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import Loading from './loading.svelte';
 	import type { PageData } from './$types';
+	import { PUBLIC_VERCEL_PROJECT_ID } from '$env/static/public';
+	import { browser } from '$app/environment';
+	import { webVitals } from '$lib/vitals';
 
 	export let data: PageData;
 
 	let { supabase, session, profile } = data;
 	$: ({ supabase, session, profile } = data);
+
+	let analyticsId = PUBLIC_VERCEL_PROJECT_ID;
+
+	$: if (browser && analyticsId) {
+		webVitals({
+			path: $page.url.pathname,
+			params: $page.params,
+			analyticsId
+		});
+	}
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
