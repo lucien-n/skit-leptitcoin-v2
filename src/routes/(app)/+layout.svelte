@@ -29,7 +29,7 @@
 
 <main class="w-full h-full overflow-hidden flex flex-col gap-y-2">
 	<MainNav {session} {profile} />
-	<section class="container h-full">
+	<section class="container h-full overflow-y-scroll">
 		<slot />
 	</section>
 </main>
