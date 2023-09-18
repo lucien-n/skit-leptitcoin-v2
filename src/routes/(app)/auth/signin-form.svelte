@@ -17,7 +17,6 @@
 
 		return async ({ result }) => {
 			loading = false;
-			console.log(result);
 			dispatch(result.type);
 		};
 	};

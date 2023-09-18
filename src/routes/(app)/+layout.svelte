@@ -12,8 +12,6 @@
 	let { supabase, session, profile } = data;
 	$: ({ supabase, session, profile } = data);
 
-	console.log('+layout.svelte', profile);
-
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
