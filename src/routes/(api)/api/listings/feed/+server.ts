@@ -60,12 +60,7 @@ export const GET: RequestHandler = async ({
 		listings.push(listing);
 
 		if (!cached) {
-			redis.set(
-				listing_data.uid,
-				JSON.stringify(listing),
-				'EX',
-				getRouteExpiration('listings/feed')
-			);
+			redis.set(redisKey, JSON.stringify(listing), 'EX', getRouteExpiration('listings/feed'));
 		}
 	}
 

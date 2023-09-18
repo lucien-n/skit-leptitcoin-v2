@@ -48,7 +48,7 @@ export const GET: RequestHandler = async ({ locals: { supabase, uid }, setHeader
 		created_at: listing_data.created_at
 	} satisfies TListing;
 
-	redis.set(uid, JSON.stringify(listing), 'EX', getRouteExpiration('listings/listing'));
+	redis.set(redisKey, JSON.stringify(listing), 'EX', getRouteExpiration('listings/listing'));
 
 	setHeaders(headers);
 
