@@ -1,9 +1,8 @@
 <script lang="ts">
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import type { Session, User } from '@supabase/supabase-js';
 	import { LogOutIcon, UserIcon } from 'lucide-svelte';
 
-	export let user: User;
+	export let profile: TProfile;
 </script>
 
 <DropdownMenu.Root>
@@ -12,10 +11,10 @@
 	>
 	<DropdownMenu.Content>
 		<DropdownMenu.Group>
-			<DropdownMenu.Label>{user.id}</DropdownMenu.Label>
+			<DropdownMenu.Label>{profile.name}</DropdownMenu.Label>
 			<DropdownMenu.Separator />
 			<DropdownMenu.Item>
-				<a href="/profile/{user.id}" class="w-full">Profile</a>
+				<a href="/profile/{profile.name}" class="w-full">Profile</a>
 			</DropdownMenu.Item>
 			<DropdownMenu.Item>
 				<a href="/auth/signout" class="flex gap-1 items-center w-full" data-sveltekit-reload>

@@ -1,4 +1,4 @@
-type Fetch = typeof fetch;
+export type Fetch = typeof fetch;
 
 const cfetch = async (
 	url: string,
@@ -31,4 +31,5 @@ const cfetch = async (
 	return { data, error };
 };
 
+export type CFetch = typeof cfetch;
 export default cfetch;
