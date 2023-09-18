@@ -3,9 +3,10 @@
 	import { page } from '$app/stores';
 	import Input from '$components/ui/input/input.svelte';
 	import { Loader2Icon, Search } from 'lucide-svelte';
-	import type { EventHandler, FormEventHandler, KeyboardEventHandler } from 'svelte/elements';
+	import type { EventHandler, FormEventHandler } from 'svelte/elements';
 
 	let searching = false;
+	let value: string = $page.url.searchParams.get('q') || '';
 
 	const executeSearch = () => {
 		searching = true;
@@ -13,10 +14,16 @@
 		goto($page.url, { replaceState: true, invalidateAll: true });
 	};
 
+	const updateQuery = (query?: string | null) => {
+		if (query) $page.url.searchParams.set('q', query);
+		else $page.url.searchParams.delete('q');
+		goto(`?${$page.url.searchParams}`, { keepFocus: true });
+	};
+
 	const handleInput: FormEventHandler<HTMLInputElement> = (event) => {
 		const target = event.target as HTMLInputElement;
 		const value = target.value;
-		$page.url.searchParams.set('q', value);
+		updateQuery(value);
 	};
 
 	const handleKeypress: EventHandler<KeyboardEvent> = (event) => {
@@ -30,7 +37,7 @@
 		type="text"
 		placeholder={searching ? 'Searching...' : 'Search'}
 		class="w-full"
-		value={$page.url.searchParams.get('q') || ''}
+		bind:value
 		on:input={handleInput}
 		on:keypress={handleKeypress}
 	/>
