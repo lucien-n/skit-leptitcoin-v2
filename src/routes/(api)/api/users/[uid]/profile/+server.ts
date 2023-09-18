@@ -1,8 +1,10 @@
-import { getHeaders } from '$lib/server/cache';
+import { getHeaders, getRouteExpiration } from '$lib/server/cache';
+import { checkUid } from '$lib/server/helper';
+import { redis } from '$lib/server/redis';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ locals: { supabase }, params, setHeaders }) => {
-	setHeaders(getHeaders('users/profile'));
+	let headers = getHeaders('users/profile');
 
 	const uid_or_username = params.uid as string;
 
@@ -11,6 +13,15 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params, setHea
 
 	if (uid_or_username.length === 36) uid = uid_or_username;
 	else name = uid_or_username;
+
+	const redisKey = 'profile:' + uid ? uid + '|*' : +'*|' + name;
+	const cached = await redis.get(redisKey);
+
+	if (cached) {
+		const ttl = await redis.ttl(redisKey);
+		headers = { 'Cache-Control': `max-age=${ttl}` };
+		return new Response(JSON.stringify({ data: [JSON.parse(cached)] }), { status: 200 });
+	}
 
 	const query = supabase
 		.from('profiles')
@@ -31,6 +42,16 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params, setHea
 		avatar_url: profile_data.avatar_url,
 		created_at: profile_data.created_at
 	} satisfies TProfile;
+
+	setHeaders(headers);
+
+	if (profile.name && checkUid(profile.uid))
+		redis.set(
+			`profile:${profile.uid}|${profile.name}`,
+			JSON.stringify(profile),
+			'EX',
+			getRouteExpiration('users/profile')
+		);
 
 	return new Response(JSON.stringify({ data: [profile] }), { status: 200 });
 };
