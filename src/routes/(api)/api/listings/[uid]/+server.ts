@@ -1,8 +1,17 @@
 import { getHeaders } from '$lib/server/cache';
+import { redis } from '$lib/server/redis';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ locals: { supabase, uid }, setHeaders }) => {
-	setHeaders(getHeaders('listings/listing'));
+	let headers = getHeaders('listings/listing');
+
+	const cached = await redis.get(uid);
+
+	if (cached) {
+		const ttl = await redis.ttl(uid);
+		headers = { 'Cache-Control': `max-age=${ttl}` };
+		return new Response(JSON.stringify({ data: [JSON.parse(cached)] }), { status: 200 });
+	}
 
 	const query = supabase
 		.from('listings')
@@ -37,6 +46,10 @@ export const GET: RequestHandler = async ({ locals: { supabase, uid }, setHeader
 		condition: listing_data.condition,
 		created_at: listing_data.created_at
 	} satisfies TListing;
+
+	redis.set(uid, JSON.stringify(listing), 'EX', 600);
+
+	setHeaders(headers);
 
 	return new Response(JSON.stringify({ data: [listing] }), { status: 200 });
 };
