@@ -14,7 +14,10 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params, setHea
 	if (uid_or_username.length === 36) uid = uid_or_username;
 	else name = uid_or_username;
 
-	const redisKey = 'profile:' + uid ? uid + '|*' : +'*|' + name;
+	let redisPattern = 'profile:';
+	if (uid) redisPattern += uid + '|*';
+	if (name) redisPattern += '*|' + name;
+	const redisKey = (await redis.keys(redisPattern))[0];
 	const cached = await redis.get(redisKey);
 
 	if (cached) {
