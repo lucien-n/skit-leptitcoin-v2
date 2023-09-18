@@ -4,6 +4,10 @@ const ROUTES_SETTINGS = {
 	'listings/listing': {
 		max_age: 300,
 		enabled: PRIVATE_MODE == 'DEV'
+	},
+	'users/profile': {
+		max_age: 600,
+		enabled: PRIVATE_MODE == 'DEV'
 	}
 };
 

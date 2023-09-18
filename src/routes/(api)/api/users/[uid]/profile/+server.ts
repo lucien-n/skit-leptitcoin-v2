@@ -1,6 +1,9 @@
+import { getHeaders } from '$lib/server/cache';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ locals: { supabase }, params }) => {
+export const GET: RequestHandler = async ({ locals: { supabase }, params, setHeaders }) => {
+	setHeaders(getHeaders('users/profile'));
+
 	const uid_or_username = params.uid as string;
 
 	let uid = '';
