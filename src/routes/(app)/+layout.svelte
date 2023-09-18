@@ -1,14 +1,11 @@
 <script lang="ts">
-	import '../../app.postcss';
 	import { invalidate } from '$app/navigation';
+	import { navigating } from '$app/stores';
 	import { onMount } from 'svelte';
-	import MainNav from './main-nav.svelte';
-	import { navigating, page } from '$app/stores';
-	import Loading from './loading.svelte';
+	import '../../app.postcss';
 	import type { PageData } from './$types';
-	import { PUBLIC_VERCEL_PROJECT_ID } from '$env/static/public';
-	import { browser } from '$app/environment';
-	import { webVitals } from '$lib/vitals';
+	import Loading from './loading.svelte';
+	import MainNav from './main-nav.svelte';
 
 	export let data: PageData;
 
