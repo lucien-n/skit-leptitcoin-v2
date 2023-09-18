@@ -12,7 +12,7 @@
 </script>
 
 <Svroller width="100%" height="80%">
-	<section class="flex flex-col gap-2">
+	<section class="flex flex-col h-full gap-2">
 		{#await listingsPromise}
 			<p>Fetching listings</p>
 		{:then { data: listings, error }}
