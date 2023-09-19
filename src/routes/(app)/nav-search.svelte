@@ -3,17 +3,15 @@
 	import { page } from '$app/stores';
 	import Shortcut from '$components/lpc/shortcut.svelte';
 	import Input from '$components/ui/input/input.svelte';
+	import { searchingStore } from '$lib/stores';
 	import { Loader2Icon, Search } from 'lucide-svelte';
 	import type { EventHandler, FormEventHandler } from 'svelte/elements';
 
-	let searching = false;
 	let value: string = $page.url.searchParams.get('q') || '';
 
 	let input: { focus: () => void };
 
 	const executeSearch = () => {
-		searching = true;
-		setTimeout(() => (searching = false), 2_000);
 		goto($page.url, { replaceState: true, invalidateAll: true });
 	};
 
@@ -39,7 +37,7 @@
 	<div class="relative w-full">
 		<Input
 			type="text"
-			placeholder={searching ? 'Searching...' : 'Search'}
+			placeholder={$searchingStore ? 'Searching...' : 'Search'}
 			class="w-full"
 			bind:value
 			on:input={handleInput}
@@ -51,7 +49,7 @@
 		</span>
 	</div>
 	<button on:click={executeSearch}>
-		{#if searching}
+		{#if $searchingStore}
 			<div class="animate-spin">
 				<Loader2Icon />
 			</div>

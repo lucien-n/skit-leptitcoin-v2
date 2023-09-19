@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import ListingSkeleton from './listing-skeleton.svelte';
 	import Listing from './listing.svelte';
+	import { searchingStore } from '$lib/stores';
 
 	export let data;
 
@@ -16,6 +17,8 @@
 	let timeoutSet: boolean = false;
 
 	const filterListings = async (): Promise<TListing[]> => {
+		searchingStore.set(true);
+
 		const query = $page.url.searchParams.get('q');
 
 		const url = `/api/listings/search${query ? '?q=' + query : ''}`;
@@ -24,6 +27,8 @@
 		if (error) throw error;
 
 		const listings = data as TListing[];
+
+		searchingStore.set(false);
 
 		return listings;
 	};
