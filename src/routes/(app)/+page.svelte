@@ -12,7 +12,7 @@
 	let getListings: Promise<TListing[]>;
 
 	const filterListings = async (query?: string | null): Promise<TListing[]> => {
-		const url = `/api/listings/feed${query ? '?q=' + query : ''}`;
+		const url = `/api/listings/search${query ? '?q=' + query : ''}`;
 
 		const { data, error } = await cfetch(url, 'GET', fetch);
 		if (error) throw error;

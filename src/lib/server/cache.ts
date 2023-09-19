@@ -7,7 +7,7 @@ const CACHE_SETTINGS = {
 		max_age: 300,
 		enabled: DEV
 	},
-	'listings/feed': {
+	'listings/search': {
 		max_age: 300,
 		enabled: DEV
 	},
