@@ -4,6 +4,7 @@
 	import cfetch from '$lib/cfetch';
 	import { onMount } from 'svelte';
 	import Listing from './listing.svelte';
+	import ListingSkeleton from './listing-skeleton.svelte';
 
 	export let data;
 
@@ -32,7 +33,9 @@
 <!-- <Svroller width="100%" height="90%"> -->
 <section class="flex flex-col h-full gap-2">
 	{#await getListings}
-		<p>Fetching listings</p>
+		{#each { length: 8 } as i}
+			<ListingSkeleton />
+		{/each}
 	{:then listings}
 		{#if listings}
 			{#each listings as listing}
