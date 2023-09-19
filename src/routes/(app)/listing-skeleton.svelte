@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ConditionBadge from '$components/lpc/condition-badge.svelte';
 	import * as Card from '$components/ui/card';
 	import Skeleton from '$components/ui/skeleton/skeleton.svelte';
 	import { AspectRatio } from '$lib/components/ui/aspect-ratio';

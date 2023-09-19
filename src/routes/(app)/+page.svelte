@@ -2,9 +2,10 @@
 	import { page } from '$app/stores';
 	import * as Alert from '$components/ui/alert';
 	import cfetch from '$lib/cfetch';
+	import { SEARCH_COOLDOWN } from '$lib/constants';
 	import { onMount } from 'svelte';
-	import Listing from './listing.svelte';
 	import ListingSkeleton from './listing-skeleton.svelte';
+	import Listing from './listing.svelte';
 
 	export let data;
 
@@ -12,7 +13,11 @@
 
 	let getListings: Promise<TListing[]>;
 
-	const filterListings = async (query?: string | null): Promise<TListing[]> => {
+	let timeoutSet: boolean = false;
+
+	const filterListings = async (): Promise<TListing[]> => {
+		const query = $page.url.searchParams.get('q');
+
 		const url = `/api/listings/search${query ? '?q=' + query : ''}`;
 
 		const { data, error } = await cfetch(url, 'GET', fetch);
@@ -25,21 +30,31 @@
 
 	onMount(() => (getListings = filterListings()));
 
-	page.subscribe(({ url: { searchParams } }) => {
-		getListings = filterListings(searchParams.get('q'));
+	page.subscribe(() => {
+		if (timeoutSet) return;
+
+		timeoutSet = true;
+		setTimeout(() => {
+			getListings = filterListings();
+			timeoutSet = false;
+			console.log('Timeout executed');
+		}, SEARCH_COOLDOWN);
 	});
 </script>
 
-<!-- <Svroller width="100%" height="90%"> -->
 <section class="flex flex-col h-full gap-2">
 	{#await getListings}
 		{#each { length: 8 } as i}
-			<ListingSkeleton />
+			<span>
+				<ListingSkeleton />
+			</span>
 		{/each}
 	{:then listings}
 		{#if listings}
 			{#each listings as listing}
-				<Listing {listing} />
+				<span>
+					<Listing {listing} />
+				</span>
 			{/each}
 		{/if}
 	{:catch error}
@@ -50,4 +65,3 @@
 	{/await}
 	<hr />
 </section>
-<!-- </Svroller> -->
