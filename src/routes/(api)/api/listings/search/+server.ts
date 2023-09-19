@@ -9,10 +9,37 @@ export const GET: RequestHandler = async ({
 	fetch
 }) => {
 	const headers = getHeaders('listings/search');
+
+	const params: {
+		query?: string;
+		offset?: number;
+		condition?: number;
+		category?: string;
+		priceMin?: number;
+		priceMax?: number;
+		order: 'ASC' | 'DESC';
+		orderBy: string;
+	} = { order: 'DESC', orderBy: 'created_at' };
+
 	const query = searchParams.get('q');
+	if (query) params.query = query;
+
+	const condition = parseInt(searchParams.get('condition') || '-1');
+	if (condition >= 0 && condition <= 4) params.condition = condition;
+
+	const category = searchParams.get('category');
+	if (category) params.category = category;
+
+	const priceMin = parseInt(searchParams.get('price-min') || '0');
+	if (priceMin && priceMin > 0) params.priceMin = priceMin;
+
+	const priceMax = parseInt(searchParams.get('price-min') || '0');
+	if (priceMax && priceMax > priceMin) params.priceMax = priceMax;
+
+	console.log(params);
 
 	const { data, error } = await supabase.functions.invoke('get-listings-search', {
-		body: { offset: 0, query }
+		body: params
 	});
 
 	if (error) return new Response(null, { status: 500 });

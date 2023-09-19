@@ -19,11 +19,13 @@
 	const filterListings = async (): Promise<TListing[]> => {
 		searchingStore.set(true);
 
-		const query = $page.url.searchParams.get('q');
+		const searchParams = new URLSearchParams($page.url.search);
 
-		const url = `/api/listings/search${query ? '?q=' + query : ''}`;
+		const url = new URL($page.url.origin + '/api/listings/search');
 
-		const { data, error } = await cfetch(url, 'GET', fetch);
+		searchParams.forEach((value, key) => url.searchParams.set(key, value));
+
+		const { data, error } = await cfetch(url.toString(), 'GET', fetch);
 		if (error) throw error;
 
 		const listings = data as TListing[];
