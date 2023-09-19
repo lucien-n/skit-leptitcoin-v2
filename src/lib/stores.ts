@@ -49,3 +49,5 @@ export const profileStore: ProfileStore = createProfileStore();
 export const titleStore = writable<string>('');
 
 export const searchingStore = writable<boolean>(false);
+
+export const shortcutsEnabledStore = writable<boolean>(true);

@@ -6,7 +6,7 @@
 	import type { PageData } from './$types';
 	import Loading from './loading.svelte';
 	import MainNav from './main-nav.svelte';
-	import { titleStore } from '$lib/stores';
+	import { shortcutsEnabledStore, titleStore } from '$lib/stores';
 	import { setTitle } from '$lib/helper';
 	import { PREFIX as SITE_NAME } from '$lib/constants';
 
@@ -25,8 +25,17 @@
 		return () => data.subscription.unsubscribe();
 	});
 
+	const setupShortcuts = () => {
+		const elements = document.querySelectorAll('input, textarea');
+		elements.forEach((element) => {
+			element.addEventListener('focusin', () => ($shortcutsEnabledStore = false));
+			element.addEventListener('focusout', () => ($shortcutsEnabledStore = true));
+		});
+	};
+
 	onMount(() => {
 		setTitle('LePtitCoin');
+		setupShortcuts();
 	});
 </script>
 

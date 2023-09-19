@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Kbd from '$components/lpc/kbd.svelte';
+	import { shortcutsEnabledStore } from '$lib/stores';
 	import type { Shortcut } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import type { KeyboardEventHandler } from 'svelte/elements';
@@ -20,6 +21,8 @@
 	};
 
 	const handleKeypress: KeyboardEventHandler<Window> = (event) => {
+		if (!$shortcutsEnabledStore) return;
+
 		if (event.key.toLowerCase() !== shortcut.key.toLowerCase()) return;
 		if (shortcut.ctrlRequired && !event.ctrlKey) return;
 		if (shortcut.shiftRequired && !event.shiftKey) return;
