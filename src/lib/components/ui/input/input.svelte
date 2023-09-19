@@ -15,7 +15,6 @@
 	export const I = {
 		focus() {
 			input.focus();
-			console.log('triggered shortcut', focus);
 		}
 	};
 </script>
