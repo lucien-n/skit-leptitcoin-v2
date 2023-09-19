@@ -35,9 +35,9 @@
 
 		timeoutSet = true;
 		setTimeout(() => {
+			if (!timeoutSet) return;
 			getListings = filterListings();
 			timeoutSet = false;
-			console.log('Timeout executed');
 		}, SEARCH_COOLDOWN);
 	});
 </script>
@@ -50,12 +50,16 @@
 			</span>
 		{/each}
 	{:then listings}
-		{#if listings}
+		{#if listings && listings.length > 0}
 			{#each listings as listing}
 				<span>
 					<Listing {listing} />
 				</span>
 			{/each}
+		{:else}
+			<div class="h-full flex justify-center items-center">
+				<h1 class="text-4xl text-center opacity-80">No listing found</h1>
+			</div>
 		{/if}
 	{:catch error}
 		<Alert.Root>
