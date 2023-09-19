@@ -31,7 +31,7 @@
 
 <Sheet.Root>
 	<Sheet.Trigger asChild let:builder>
-		<Button builders={[builder]} variant="ghost"><Settings2 /></Button>
+		<Button builders={[builder]} variant="ghost" class="p-1 md:px-2"><Settings2 /></Button>
 	</Sheet.Trigger>
 	<Sheet.Content>
 		<Sheet.Header>
