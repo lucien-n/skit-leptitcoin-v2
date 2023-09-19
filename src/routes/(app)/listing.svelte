@@ -6,7 +6,7 @@
 	export let listing: TListing;
 </script>
 
-<Card.Root class="grid grid-cols-5 group h-full">
+<Card.Root class="grid grid-cols-5 group h-40 md:h-64">
 	<Card.Header class="p-0 col-span-2">
 		<div class="bg-muted h-full">
 			<img
