@@ -18,7 +18,7 @@ serve(async (req) => {
 
 		try {
 			const q = `SELECT uid FROM listings ${
-				query ? `WHERE title LIKE '%${query || ''}%'` : ''
+				query ? `WHERE title ILIKE '%${query || ''}%'` : ''
 			} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset};`;
 
 			const result = await connection.queryObject(q);
