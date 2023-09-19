@@ -57,3 +57,10 @@ export const CONDITIONS: Condition[] = [
 		label: 'Brand new'
 	}
 ];
+
+export type Shortcut = {
+	key: string;
+	altRequired?: boolean;
+	ctrlRequired?: boolean;
+	shiftRequired?: boolean;
+};

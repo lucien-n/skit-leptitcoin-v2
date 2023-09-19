@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import Shortcut from '$components/lpc/shortcut.svelte';
 	import Input from '$components/ui/input/input.svelte';
 	import { Loader2Icon, Search } from 'lucide-svelte';
 	import type { EventHandler, FormEventHandler } from 'svelte/elements';
 
 	let searching = false;
 	let value: string = $page.url.searchParams.get('q') || '';
+
+	let input: { focus: () => void };
 
 	const executeSearch = () => {
 		searching = true;
@@ -33,14 +36,20 @@
 </script>
 
 <div class="w-[70%] mx-auto flex items-center gap-2">
-	<Input
-		type="text"
-		placeholder={searching ? 'Searching...' : 'Search'}
-		class="w-full"
-		bind:value
-		on:input={handleInput}
-		on:keypress={handleKeypress}
-	/>
+	<div class="relative w-full">
+		<Input
+			type="text"
+			placeholder={searching ? 'Searching...' : 'Search'}
+			class="w-full"
+			bind:value
+			on:input={handleInput}
+			on:keypress={handleKeypress}
+			bind:I={input}
+		/>
+		<span class="absolute right-2 top-2">
+			<Shortcut shortcut={{ key: '/' }} on:shortcut={() => input.focus()} />
+		</span>
+	</div>
 	<button on:click={executeSearch}>
 		{#if searching}
 			<div class="animate-spin">
