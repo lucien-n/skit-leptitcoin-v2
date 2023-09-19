@@ -30,10 +30,12 @@
 		</a>
 		<div class="flex flex-col">
 			<a
-				class="font-semibold hover:underline hover:text-primary"
+				class="font-semibold hover:underline hover:text-primary w-fit"
 				href="/profile/{listing.author.name}">{listing.author.name}</a
 			>
-			{formatDate(listing.created_at)}
+			<p>
+				{formatDate(listing.created_at)}
+			</p>
 		</div>
 	</Card.Content>
 </Card.Root>
