@@ -43,20 +43,6 @@ const buildQuery = ({
 
 	const query = `SELECT uid FROM listings ${whereClause} ${orderClause} ${rangeClause}`;
 
-	console.log(
-		{
-			search,
-			offset,
-			condition,
-			category,
-			priceMin,
-			priceMax,
-			order,
-			orderBy
-		},
-		query
-	);
-
 	return query;
 };
 

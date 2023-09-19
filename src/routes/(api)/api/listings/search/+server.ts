@@ -36,8 +36,6 @@ export const GET: RequestHandler = async ({
 	const priceMax = parseInt(searchParams.get('price-min') || '0');
 	if (priceMax && priceMax > priceMin) params.priceMax = priceMax;
 
-	console.log(params);
-
 	const { data, error } = await supabase.functions.invoke('get-listings-search', {
 		body: params
 	});
