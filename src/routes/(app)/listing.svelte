@@ -1,21 +1,20 @@
 <script lang="ts">
 	import ConditionBadge from '$components/lpc/condition-badge.svelte';
 	import * as Card from '$components/ui/card';
-	import { AspectRatio } from '$lib/components/ui/aspect-ratio';
 	import { formatDate } from '$lib/helper';
 
 	export let listing: TListing;
 </script>
 
-<Card.Root class="grid grid-cols-5 group">
-	<Card.Header class="h-full w-full p-0 col-span-2">
-		<AspectRatio ratio={2 / 1} class="bg-muted">
+<Card.Root class="grid grid-cols-5 group h-full">
+	<Card.Header class="p-0 col-span-2">
+		<div class="bg-muted h-full">
 			<img
 				src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
 				alt="Gray by Drew Beamer"
-				class="rounded-l-md object-cover h-full w-full"
+				class="rounded-l-md object-cover h-40 md:h-64 w-full"
 			/>
-		</AspectRatio>
+		</div>
 	</Card.Header>
 	<Card.Content
 		class="col-span-3 pl-2 p-3 flex-col flex justify-between h-full group-hover:cursor-pointer"

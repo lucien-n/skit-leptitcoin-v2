@@ -52,16 +52,12 @@
 <section class="flex flex-col h-full gap-2">
 	{#await getListings}
 		{#each { length: 8 } as i}
-			<span>
-				<ListingSkeleton />
-			</span>
+			<ListingSkeleton />
 		{/each}
 	{:then listings}
 		{#if listings && listings.length > 0}
 			{#each listings as listing}
-				<span>
-					<Listing {listing} />
-				</span>
+				<Listing {listing} />
 			{/each}
 		{:else}
 			<div class="h-full flex justify-center items-center">
