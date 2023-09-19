@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { SuperValidated } from 'sveltekit-superforms';
-	import { newSchema, type NewSchema } from './schema';
-	import { createEventDispatcher } from 'svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import * as Form from '$components/ui/form';
 	import { enhance } from '$app/forms';
+	import * as Form from '$components/ui/form';
 	import * as Select from '$components/ui/select';
 	import { CATEGORIES, CONDITIONS } from '$lib/types';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { createEventDispatcher } from 'svelte';
+	import type { SuperValidated } from 'sveltekit-superforms';
+	import { newSchema, type NewSchema } from './schema';
 
 	export let form: SuperValidated<NewSchema>;
 

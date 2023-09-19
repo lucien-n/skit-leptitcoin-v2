@@ -31,29 +31,29 @@ export const CATEGORIES: Category[] = [
 ];
 
 export type Condition = {
-	value: number;
+	value: string;
 	label: string;
 };
 
 export const CONDITIONS: Condition[] = [
 	{
-		value: 0,
+		value: '0',
 		label: 'For Parts'
 	},
 	{
-		value: 1,
+		value: '1',
 		label: 'Satisfactory state'
 	},
 	{
-		value: 2,
+		value: '2',
 		label: 'Good state'
 	},
 	{
-		value: 3,
+		value: '3',
 		label: 'Very good state'
 	},
 	{
-		value: 4,
+		value: '4',
 		label: 'Brand new'
 	}
 ];
