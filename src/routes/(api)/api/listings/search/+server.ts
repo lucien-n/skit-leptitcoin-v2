@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ({
 	const headers = getHeaders('listings/search');
 
 	const params: {
-		query?: string;
+		search?: string;
 		offset?: number;
 		condition?: number;
 		category?: string;
@@ -22,7 +22,7 @@ export const GET: RequestHandler = async ({
 	} = { order: 'DESC', orderBy: 'created_at' };
 
 	const query = searchParams.get('q');
-	if (query) params.query = query;
+	if (query) params.search = query;
 
 	const condition = parseInt(searchParams.get('condition') || '-1');
 	if (condition >= 0 && condition <= 4) params.condition = condition;
