@@ -118,8 +118,12 @@
 		</div>
 		<Sheet.Footer>
 			<Sheet.Close asChild let:builder>
-				<Button builders={[builder]} type="submit" class="w-full" on:click={executeFilteredSearch}
-					>Search</Button
+				<Button
+					builders={[builder]}
+					type="submit"
+					class="w-full"
+					on:keydown={({ key }) => key === 'Enter' && executeFilteredSearch()}
+					on:click={executeFilteredSearch}>Search</Button
 				>
 			</Sheet.Close>
 		</Sheet.Footer>
