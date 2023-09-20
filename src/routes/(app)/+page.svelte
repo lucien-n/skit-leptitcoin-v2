@@ -3,10 +3,9 @@
 	import * as Alert from '$components/ui/alert';
 	import cfetch from '$lib/cfetch';
 	import { SEARCH_COOLDOWN } from '$lib/constants';
-	import { onMount } from 'svelte';
+	import { searchingStore } from '$lib/stores';
 	import ListingSkeleton from './listing-skeleton.svelte';
 	import Listing from './listing.svelte';
-	import { searchingStore } from '$lib/stores';
 
 	export let data;
 
@@ -17,6 +16,7 @@
 	let timeoutSet: boolean = false;
 
 	const filterListings = async (): Promise<TListing[]> => {
+		console.log('fetching listings');
 		searchingStore.set(true);
 
 		const searchParams = new URLSearchParams($page.url.search);
@@ -34,8 +34,6 @@
 
 		return listings;
 	};
-
-	onMount(() => (getListings = filterListings()));
 
 	page.subscribe(() => {
 		if (timeoutSet) return;
