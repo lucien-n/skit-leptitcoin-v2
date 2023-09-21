@@ -2,7 +2,8 @@
 	import { enhance } from '$app/forms';
 	import * as Form from '$components/ui/form';
 	import * as Select from '$components/ui/select';
-	import { CATEGORIES, CONDITIONS } from '$lib/types';
+	import { CATEGORIES, CONDITIONS } from '$lib/constants';
+	import type { Condition, Subcategory } from '$lib/types';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { createEventDispatcher } from 'svelte';
 	import type { SuperValidated } from 'sveltekit-superforms';
@@ -11,6 +12,9 @@
 	export let form: SuperValidated<NewSchema>;
 
 	const dispatch = createEventDispatcher();
+
+	let selectedCondition: Condition = { value: 'condition', label: 'Condition' };
+	let selectedCategory: Subcategory = { value: 'category', label: 'Category' };
 
 	let loading = false;
 
@@ -60,9 +64,10 @@ One little scratch on the left side"
 		<Form.Field {config} name="category">
 			<Form.Item>
 				<Form.Label>Category</Form.Label>
-				<Form.Select>
-					<Select.Trigger>Category</Select.Trigger>
+				<Form.Select bind:selected={selectedCategory}>
+					<Select.Trigger>{selectedCategory.label}</Select.Trigger>
 					<Select.Content>
+						<Select.Item value="category" label="Category">Category</Select.Item>
 						{#each CATEGORIES as category}
 							<Select.Group>
 								<Select.Label>{category.name}</Select.Label>
@@ -82,9 +87,10 @@ One little scratch on the left side"
 		<Form.Field {config} name="condition">
 			<Form.Item>
 				<Form.Label>Condition</Form.Label>
-				<Form.Select>
-					<Select.Trigger>State</Select.Trigger>
+				<Form.Select bind:selected={selectedCondition}>
+					<Select.Trigger>{selectedCondition.label}</Select.Trigger>
 					<Select.Content>
+						<Select.Item value="condition" label="condition">Condition</Select.Item>
 						{#each CONDITIONS as condition}
 							<Select.Item value={condition.value.toString()}>{condition.label}</Select.Item>
 						{/each}

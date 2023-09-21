@@ -7,10 +7,11 @@
 	import * as Select from '$components/ui/select';
 	import Separator from '$components/ui/separator/separator.svelte';
 	import * as Sheet from '$components/ui/sheet';
-	import { CATEGORIES, CONDITIONS, type Condition } from '$lib/types';
+	import { CATEGORIES, CONDITIONS } from '$lib/constants';
+	import type { Condition, Subcategory } from '$lib/types';
 	import { Settings2 } from 'lucide-svelte';
 
-	let selectedCategory: { value: string; label: string } = { value: 'any', label: 'Any' };
+	let selectedCategory: Subcategory = { value: 'any', label: 'Any' };
 	let selectedCondition: Condition = { value: 'any', label: 'Any' };
 
 	let priceMinimum = 0;
