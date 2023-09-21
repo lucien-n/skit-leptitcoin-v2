@@ -30,6 +30,7 @@ export const actions: Actions = {
 		const description = form.data.description;
 		const category = form.data.category;
 		const condition = form.data.condition;
+		const price = form.data.price;
 
 		const query = supabase
 			.from('listings')
@@ -38,7 +39,8 @@ export const actions: Actions = {
 				title,
 				description,
 				category,
-				condition
+				condition,
+				price
 			})
 			.select('uid');
 
