@@ -24,7 +24,7 @@ const buildQuery = ({
 	category?: string;
 	priceMin?: number;
 	priceMax?: number;
-	order: 'ASC' | 'DESC';
+	order: 'asc' | 'desc';
 	orderBy: string;
 }): string => {
 	const conditions: string[] = [];
@@ -38,7 +38,7 @@ const buildQuery = ({
 		conditions.push(`price <= ${priceMax}`);
 
 	const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
-	const orderClause = orderBy ? `ORDER BY ${orderBy} ${order ? order : ''}` : '';
+	const orderClause = orderBy ? `ORDER BY ${orderBy} ${order ? order : 'DESC'}` : '';
 	const rangeClause = `LIMIT ${limit} ${offset ? `OFFSET ${offset}` : ''}`;
 
 	const query = `SELECT uid FROM listings ${whereClause} ${orderClause} ${rangeClause}`;

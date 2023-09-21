@@ -17,9 +17,12 @@ export const GET: RequestHandler = async ({
 		category?: string;
 		priceMin?: number;
 		priceMax?: number;
-		order: 'ASC' | 'DESC';
+		order: 'asc' | 'desc';
 		orderBy: string;
-	} = { order: 'DESC', orderBy: 'created_at' };
+	} = {
+		order: 'desc',
+		orderBy: 'created_at'
+	};
 
 	const query = searchParams.get('q');
 	if (query) params.search = query;
@@ -30,11 +33,17 @@ export const GET: RequestHandler = async ({
 	const category = searchParams.get('category');
 	if (category) params.category = category;
 
-	const priceMin = parseInt(searchParams.get('price-min') || '0');
+	const priceMin = parseInt(searchParams.get('price_min') || '0');
 	if (priceMin && priceMin > 0) params.priceMin = priceMin;
 
-	const priceMax = parseInt(searchParams.get('price-min') || '0');
+	const priceMax = parseInt(searchParams.get('price_min') || '0');
 	if (priceMax && priceMax > priceMin) params.priceMax = priceMax;
+
+	const order = searchParams.get('order') as 'asc' | 'desc';
+	if (order !== 'desc') params.order = order;
+
+	const orderBy = searchParams.get('order_by');
+	if (orderBy && orderBy !== 'created_at') params.orderBy = orderBy;
 
 	const { data, error } = await supabase.functions.invoke('get-listings-search', {
 		body: params

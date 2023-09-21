@@ -47,3 +47,14 @@ export const CONDITIONS: Condition[] = [
 		label: 'Brand new'
 	}
 ];
+
+export const ORDER_COLUMNS = [
+	{ value: 'created_at', label: 'Date of creation' },
+	{ value: 'price', label: 'Price' },
+	{ value: 'condition', label: 'Condition' }
+];
+
+export const ORDER_BY = [
+	{ value: 'desc', label: 'Descendant' },
+	{ value: 'asc', label: 'Ascendant' }
+];

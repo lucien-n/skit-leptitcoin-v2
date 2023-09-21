@@ -7,12 +7,18 @@
 	import * as Select from '$components/ui/select';
 	import Separator from '$components/ui/separator/separator.svelte';
 	import * as Sheet from '$components/ui/sheet';
-	import { CATEGORIES, CONDITIONS } from '$lib/constants';
+	import * as RadioGroup from '$lib/components/ui/radio-group';
+	import { CATEGORIES, CONDITIONS, ORDER_COLUMNS, ORDER_BY } from '$lib/constants';
 	import type { Condition, Subcategory } from '$lib/types';
 	import { Settings2 } from 'lucide-svelte';
 
 	let selectedCategory: Subcategory = { value: 'any', label: 'Any' };
-	let selectedCondition: Condition = { value: 'any', label: 'Any' };
+	let selectedCondition: Condition = { value: -1, label: 'Any' };
+	let selectedOrderBy: { value: string; label: string } = ORDER_COLUMNS[0];
+
+	let selectedOrderValue: string = ORDER_BY[0].value;
+
+	$: selectedOrder = ORDER_BY.filter(({ value }) => value == selectedOrderValue)[0];
 
 	let priceMinimum = 0;
 	let priceMaximum = 0;
@@ -21,10 +27,14 @@
 		const url = new URL($page.url.origin);
 
 		if (selectedCategory.value !== 'any') url.searchParams.set('category', selectedCategory.value);
-		if (selectedCondition.value !== 'any')
-			url.searchParams.set('condition', selectedCondition.value);
-		if (priceMinimum > 0) url.searchParams.set('price-min', priceMinimum.toString());
-		if (priceMaximum > priceMinimum) url.searchParams.set('price-max', priceMaximum.toString());
+		if (selectedCondition.value !== -1)
+			url.searchParams.set('condition', selectedCondition.value.toString());
+		if (priceMinimum > 0) url.searchParams.set('price_min', priceMinimum.toString());
+		if (priceMaximum > priceMinimum) url.searchParams.set('price_max', priceMaximum.toString());
+
+		if (selectedOrderBy.value !== 'created_at')
+			url.searchParams.set('order_by', selectedOrderBy.value);
+		if (selectedOrderValue !== 'desc') url.searchParams.set('order', selectedOrder.value);
 
 		goto(url, { keepFocus: true });
 	};
@@ -113,6 +123,38 @@
 							min="0"
 							max="99999"
 						/>
+					</div>
+				</div>
+			</div>
+			<Separator orientation="horizontal" />
+			<div class="flex flex-col gap-4">
+				<h1 class="text-lg font-semibold">Sort</h1>
+				<div class="grid grid-cols-4 items-center gap-4">
+					<Label for="category" class="text-right">Sort by</Label>
+					<div class="col-span-3">
+						<Select.Root bind:selected={selectedOrderBy}>
+							<Select.Trigger>{selectedOrderBy.label}</Select.Trigger>
+							<Select.Content>
+								{#each ORDER_COLUMNS as column}
+									<Select.Item value={column.value} label={column.label}>{column.label}</Select.Item
+									>
+								{/each}
+							</Select.Content>
+						</Select.Root>
+					</div>
+				</div>
+				<div class="grid grid-cols-4 items-center gap-4">
+					<Label for="category" class="text-right">Direction</Label>
+					<div class="col-span-3">
+						<RadioGroup.Root bind:value={selectedOrderValue} class="flex gap-4">
+							{#each ORDER_BY as direction}
+								<div class="flex items-center space-x-2">
+									<RadioGroup.Item value={direction.value} id="r-{direction.value}" />
+									<Label for="r-{direction.value}">{direction.label}</Label>
+								</div>
+							{/each}
+							<RadioGroup.Input name="sort_direction" />
+						</RadioGroup.Root>
 					</div>
 				</div>
 			</div>
