@@ -13,7 +13,30 @@
 
 	function handleInput(event: Event) {
 		const target = event.target as HTMLInputElement;
-		value = type?.match(/^(number|range)$/) ? +target.value : target.value;
+
+		let isTypeNumber = type?.match(/^(number|range)$/);
+
+		if (isTypeNumber && target.value == '') {
+			value = 0;
+			return;
+		}
+
+		if (isTypeNumber && isNaN(parseFloat(target.value))) {
+			event.preventDefault();
+			console.log('nan');
+			return;
+		}
+
+		console.log(
+			target.value,
+			typeof target.value,
+			typeof parseFloat(target.value),
+			parseFloat(target.value)
+		);
+
+		console.log('set value', isTypeNumber);
+
+		value = isTypeNumber ? +target.value : target.value;
 	}
 
 	let input: HTMLElement;
