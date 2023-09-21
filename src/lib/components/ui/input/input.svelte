@@ -23,7 +23,6 @@
 
 		if (isTypeNumber && isNaN(parseFloat(target.value))) {
 			event.preventDefault();
-			console.log('nan');
 			return;
 		}
 
@@ -33,8 +32,6 @@
 			typeof parseFloat(target.value),
 			parseFloat(target.value)
 		);
-
-		console.log('set value', isTypeNumber);
 
 		value = isTypeNumber ? +target.value : target.value;
 	}
