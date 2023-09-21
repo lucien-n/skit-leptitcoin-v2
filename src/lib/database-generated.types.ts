@@ -9,6 +9,37 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      bookmarks: {
+        Row: {
+          create_at: string
+          listing_uid: string
+          profile_uid: string
+        }
+        Insert: {
+          create_at?: string
+          listing_uid: string
+          profile_uid: string
+        }
+        Update: {
+          create_at?: string
+          listing_uid?: string
+          profile_uid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_listing_uid_fkey"
+            columns: ["listing_uid"]
+            referencedRelation: "listings"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "bookmarks_profile_uid_fkey"
+            columns: ["profile_uid"]
+            referencedRelation: "profiles"
+            referencedColumns: ["uid"]
+          }
+        ]
+      }
       listings: {
         Row: {
           author_uid: string
