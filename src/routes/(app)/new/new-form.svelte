@@ -25,9 +25,6 @@
 			dispatch(result.type, result);
 		};
 	};
-
-	let tesrt: number;
-	$: console.log(tesrt, typeof tesrt);
 </script>
 
 <Form.Root schema={newSchema} {form} let:config debug>
