@@ -26,13 +26,6 @@
 			return;
 		}
 
-		console.log(
-			target.value,
-			typeof target.value,
-			typeof parseFloat(target.value),
-			parseFloat(target.value)
-		);
-
 		value = isTypeNumber ? +target.value : target.value;
 	}
 
