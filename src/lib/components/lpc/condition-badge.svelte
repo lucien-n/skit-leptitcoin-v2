@@ -4,7 +4,7 @@
 
 	export let condition: number;
 
-	let text = CONDITIONS.filter((el) => el.value == condition.toString())[0].label;
+	let text = CONDITIONS.filter((el) => el.value == condition)[0].label;
 </script>
 
 {#if condition >= 3}

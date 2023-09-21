@@ -13,7 +13,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	let selectedCondition: Condition = { value: 'condition', label: 'Condition' };
+	let selectedCondition: Condition = { value: -1, label: 'Condition' };
 	let selectedCategory: Subcategory = { value: 'category', label: 'Category' };
 
 	let loading = false;
@@ -25,6 +25,9 @@
 			dispatch(result.type, result);
 		};
 	};
+
+	let tesrt: number;
+	$: console.log(tesrt, typeof tesrt);
 </script>
 
 <Form.Root schema={newSchema} {form} let:config debug>
@@ -97,9 +100,9 @@ One little scratch on the left side"
 				<Form.Select bind:selected={selectedCondition}>
 					<Select.Trigger>{selectedCondition.label}</Select.Trigger>
 					<Select.Content>
-						<Select.Item value="condition" label="condition">Condition</Select.Item>
+						<Select.Item value={-1} label="Condition">Condition</Select.Item>
 						{#each CONDITIONS as condition}
-							<Select.Item value={condition.value.toString()}>{condition.label}</Select.Item>
+							<Select.Item value={condition.value}>{condition.label}</Select.Item>
 						{/each}
 					</Select.Content>
 				</Form.Select>

@@ -9,7 +9,7 @@ export type Category = {
 };
 
 export type Condition = {
-	value: string;
+	value: number;
 	label: string;
 };
 
