@@ -17,7 +17,7 @@
 </script>
 
 <section class="w-full h-full flex justify-center items-center">
-	<div class="w-full md:w-4/5 xl:w-3/5 gap-2 flex flex-col">
+	<section class="w-full h-full md:w-4/5 xl:w-3/5 gap-2 flex flex-col justify-center">
 		{#if form?.error}
 			<Alert.Root>
 				<Alert.Title class="font-semibold">Auth error</Alert.Title>
@@ -29,5 +29,5 @@
 				<NewForm form={data.form} {supabase} on:success={gotoListing} />
 			</Card.Content>
 		</Card.Root>
-	</div>
+	</section>
 </section>
