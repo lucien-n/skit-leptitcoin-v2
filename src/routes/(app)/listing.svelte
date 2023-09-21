@@ -1,9 +1,7 @@
 <script lang="ts">
-	import Bookmark from '$components/lpc/bookmark.svelte';
 	import ConditionBadge from '$components/lpc/condition-badge.svelte';
 	import * as Card from '$components/ui/card';
 	import { formatCategory, formatDate } from '$lib/helper';
-	import { profileStore } from '$lib/stores';
 
 	export let listing: TListing;
 </script>
@@ -43,11 +41,6 @@
 					{formatDate(listing.created_at)}
 				</p>
 			</div>
-			{#if $profileStore}
-				<div class="self-end">
-					<Bookmark {listing} />
-				</div>
-			{/if}
 		</div>
 	</Card.Content>
 </Card.Root>

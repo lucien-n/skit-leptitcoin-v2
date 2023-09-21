@@ -1,6 +1,8 @@
 <script lang="ts">
-	import type { PageServerData } from './$types';
+	import Bookmark from '$components/lpc/bookmark.svelte';
 	import * as Alert from '$components/ui/alert';
+	import { profileStore } from '$lib/stores';
+	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
 
@@ -20,5 +22,10 @@
 		{#each Object.entries(listing) as [key, value]}
 			<strong>{key}:</strong> {value} <br />
 		{/each}
+		{#if $profileStore}
+			<div class="self-end">
+				<Bookmark {listing} />
+			</div>
+		{/if}
 	{/if}
 {/await}
