@@ -8,6 +8,8 @@ const cfetch = async (
 ): Promise<{
 	data: Array<never>;
 	error: string;
+	status: number;
+	statusText: string;
 }> => {
 	const res = await fetch(url, { method, ...options });
 
@@ -22,13 +24,20 @@ const cfetch = async (
 
 		return {
 			data: [],
-			error: `[${res.status}] <${method}> '${url}'${error ? ' => ' + error : ''}`
+			error: `[${res.status}] <${method}> '${url}'${error ? ' => ' + error : ''}`,
+			status: res.status,
+			statusText: res.statusText
 		};
 	}
 
-	const { data, error } = await res.json();
+	try {
+		const { data, error } = await res.json();
+		return { data, error, status: res.status, statusText: res.statusText };
+	} catch (e) {
+		/* empty */
+	}
 
-	return { data, error };
+	return { data: [], error: '', status: res.status, statusText: res.statusText };
 };
 
 export type CFetch = typeof cfetch;
