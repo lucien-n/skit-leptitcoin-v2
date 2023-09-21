@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ConditionBadge from '$components/lpc/condition-badge.svelte';
 	import * as Card from '$components/ui/card';
-	import { formatDate } from '$lib/helper';
+	import { formatCategory, formatDate } from '$lib/helper';
 
 	export let listing: TListing;
 </script>
@@ -29,10 +29,15 @@
 			</span>
 		</a>
 		<div class="flex flex-col">
-			<a
-				class="font-semibold hover:underline hover:text-primary w-fit"
-				href="/profile/{listing.author.name}">{listing.author.name}</a
-			>
+			<p>
+				{formatCategory(listing.category)}
+			</p>
+			<p>
+				<a
+					class="font-semibold hover:underline hover:text-primary w-fit"
+					href="/profile/{listing.author.name}">{listing.author.name}</a
+				>
+			</p>
 			<p>
 				{formatDate(listing.created_at)}
 			</p>

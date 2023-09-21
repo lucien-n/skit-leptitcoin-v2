@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
-import { PREFIX } from './constants';
+import { CATEGORIES, PREFIX } from './constants';
 import { titleStore } from './stores';
+import type { Subcategory } from './types';
 
 export const formatDate = (date_value: Date | number | string): string => {
 	const date = new Date(date_value);
@@ -31,4 +32,16 @@ export const setTitle = (title: string, prefix: boolean = false) => {
 	if (!browser) return;
 	if (prefix) titleStore.set(PREFIX + ' - ' + title);
 	titleStore.set(title);
+};
+
+export const formatCategory = (subCategoryValue: string) => {
+	let label: string = '';
+
+	CATEGORIES.forEach(({ subcategories }) =>
+		subcategories.forEach((subCategory: Subcategory) => {
+			if (subCategory.value == subCategoryValue.split('/').pop()) label = subCategory.label;
+		})
+	);
+
+	return label;
 };
