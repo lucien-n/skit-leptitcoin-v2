@@ -10,8 +10,9 @@
 	<Card.Header class="p-0 col-span-2">
 		<div class="bg-muted h-full">
 			<img
-				src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-				alt="Gray by Drew Beamer"
+				src={listing.image_url ??
+					'https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80'}
+				alt="listing {listing.title}"
 				class="rounded-l-md object-cover h-40 md:h-64 w-full"
 			/>
 		</div>
