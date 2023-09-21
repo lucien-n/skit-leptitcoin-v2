@@ -16,7 +16,6 @@
 	let timeoutSet: boolean = false;
 
 	const filterListings = async (): Promise<TListing[]> => {
-		console.log('fetching listings');
 		searchingStore.set(true);
 
 		const searchParams = new URLSearchParams($page.url.search);
