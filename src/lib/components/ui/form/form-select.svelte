@@ -6,7 +6,6 @@
 	type $$Props = SelectPrimitive.Props;
 	const { setValue, name, value } = getFormField();
 	export let onSelectedChange: $$Props['onSelectedChange'];
-	export let selected: $$Props['selected'];
 </script>
 
 <Select.Root
@@ -14,7 +13,6 @@
 		onSelectedChange?.(v);
 		setValue(v ? v.value : undefined);
 	}}
-	bind:selected
 	{...$$restProps}
 >
 	<slot />

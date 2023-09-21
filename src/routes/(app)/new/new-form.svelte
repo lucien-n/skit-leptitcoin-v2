@@ -16,8 +16,8 @@
 
 	const dispatch = createEventDispatcher();
 
-	let selectedCondition: Condition = { value: -1, label: 'Condition' };
-	let selectedCategory: Subcategory = { value: 'category', label: 'Category' };
+	let selectedCategoryLabel: string = 'Category';
+	let selectedConditionLabel: string = 'Condition';
 
 	let uploadPictureComp: ListingPictureUpload;
 
@@ -37,6 +37,12 @@
 	const uploadPicture = (listingUid: string) => {
 		if (created && listingUid) uploadPictureComp.upload(listingUid);
 	};
+
+	const onCategorySelectedChange = ({ label }: { label: string } & any) =>
+		(selectedCategoryLabel = label);
+
+	const onConditionSelectedChange = ({ label }: { label: string } & any) =>
+		(selectedConditionLabel = label);
 </script>
 
 <Form.Root schema={newSchema} {form} let:config>
@@ -83,8 +89,8 @@ One little scratch on the left side"
 		<Form.Field {config} name="category">
 			<Form.Item>
 				<Form.Label>Category</Form.Label>
-				<Form.Select bind:selected={selectedCategory}>
-					<Select.Trigger>{selectedCategory.label}</Select.Trigger>
+				<Form.Select onSelectedChange={onCategorySelectedChange}>
+					<Select.Trigger>{selectedCategoryLabel}</Select.Trigger>
 					<Select.Content>
 						<Select.Item value="category" label="Category">Category</Select.Item>
 						{#each CATEGORIES as category}
@@ -106,8 +112,8 @@ One little scratch on the left side"
 		<Form.Field {config} name="condition">
 			<Form.Item>
 				<Form.Label>Condition</Form.Label>
-				<Form.Select bind:selected={selectedCondition}>
-					<Select.Trigger>{selectedCondition.label}</Select.Trigger>
+				<Form.Select onSelectedChange={onConditionSelectedChange}>
+					<Select.Trigger>{selectedConditionLabel}</Select.Trigger>
 					<Select.Content>
 						<Select.Item value={-1} label="Condition">Condition</Select.Item>
 						{#each CONDITIONS as condition}
