@@ -21,6 +21,7 @@ declare global {
 		description: string;
 		category: string;
 		condition: number;
+		image_url: string;
 		created_at: number;
 	};
 

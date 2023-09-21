@@ -8,6 +8,8 @@
 	export let data: PageData;
 	export let form: any;
 
+	const { supabase } = data;
+
 	const gotoListing = (event: any) => {
 		if (event.detail && event.detail.data && event.detail.data.uid)
 			goto(`/listing/${event.detail.data.uid}`);
@@ -24,7 +26,7 @@
 		{/if}
 		<Card.Root class="w-full">
 			<Card.Content>
-				<NewForm form={data.form} on:success={gotoListing} />
+				<NewForm form={data.form} {supabase} on:success={gotoListing} />
 			</Card.Content>
 		</Card.Root>
 	</div>

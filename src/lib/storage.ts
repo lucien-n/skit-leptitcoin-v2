@@ -1,11 +1,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import imageCompression from 'browser-image-compression';
 import { srcToWebP } from 'webp-converter-browser';
-import { v4 as uuid } from 'uuid';
 
 export const uploadListingPicture = async (
 	supabase: SupabaseClient,
-	files: FileList
+	files: FileList,
+	listingUid: string
 ): Promise<string> => {
 	const file = files[0];
 
@@ -18,7 +18,7 @@ export const uploadListingPicture = async (
 
 	const webpBlob = await srcToWebP(URL.createObjectURL(compressedImage), {});
 
-	const filePath = `${uuid()}.wepb`;
+	const filePath = `${listingUid}.wepb`;
 	const wepbFile = new File([webpBlob], filePath, { type: 'image/webp' });
 
 	const { error } = await supabase.storage.from('listings').upload(filePath, wepbFile);

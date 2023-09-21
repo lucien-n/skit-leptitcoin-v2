@@ -8,22 +8,34 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { newSchema, type NewSchema } from './schema';
+	import ListingPictureUpload from '$components/lpc/listing-picture-upload.svelte';
+	import type { SupabaseClient } from '@supabase/supabase-js';
 
 	export let form: SuperValidated<NewSchema>;
+	export let supabase: SupabaseClient;
 
 	const dispatch = createEventDispatcher();
 
 	let selectedCondition: Condition = { value: -1, label: 'Condition' };
 	let selectedCategory: Subcategory = { value: 'category', label: 'Category' };
 
-	let loading = false;
+	let uploadPictureComp: ListingPictureUpload;
+
+	let loading: boolean = false;
+	let created: boolean = false;
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
 		return async ({ result }) => {
 			loading = false;
 			dispatch(result.type, result);
+			created = true;
+			if (result.type == 'success' && result.data?.uid) uploadPicture(result.data.uid);
 		};
+	};
+
+	const uploadPicture = (listingUid: string) => {
+		if (created && listingUid) uploadPictureComp.upload(listingUid);
 	};
 </script>
 
@@ -106,6 +118,7 @@ One little scratch on the left side"
 				<Form.Validation />
 			</Form.Item>
 		</Form.Field>
-		<Form.Button disabled={loading}>{loading ? 'Creating' : 'Create'}</Form.Button>
+		<ListingPictureUpload bind:this={uploadPictureComp} {supabase} />
+		<Form.Button class="pt-2" disabled={loading}>{loading ? 'Creating' : 'Create'}</Form.Button>
 	</form>
 </Form.Root>
