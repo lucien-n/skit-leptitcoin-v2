@@ -20,7 +20,7 @@
 	export const handleClick = async () => {
 		if (isBookmarked) {
 			const { status } = await cfetch(url, 'DELETE', fetch);
-			isBookmarked = status == 204;
+			isBookmarked = !(status == 204);
 		} else {
 			const { status } = await cfetch(url, 'POST', fetch);
 			isBookmarked = status == 201;
