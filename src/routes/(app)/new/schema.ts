@@ -9,6 +9,7 @@ export const newSchema = z.object({
 		.string()
 		.min(3, 'The description must be at least 3 characters long')
 		.max(500, 'The description cannot be longer than 500 characters'),
+	price: z.number().min(0).max(99999),
 	category: z.string().min(1).max(50),
 	condition: z.string().min(1).max(1)
 });

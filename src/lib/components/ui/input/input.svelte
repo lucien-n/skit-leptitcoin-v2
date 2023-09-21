@@ -8,7 +8,13 @@
 
 	let className: $$Props['class'] = undefined;
 	export let value: $$Props['value'] = undefined;
+	export let type: $$Props['type'] = 'text';
 	export { className as class };
+
+	function handleInput(event: Event) {
+		const target = event.target as HTMLInputElement;
+		value = type?.match(/^(number|range)$/) ? +target.value : target.value;
+	}
 
 	let input: HTMLElement;
 
@@ -26,6 +32,7 @@
 	)}
 	bind:value
 	bind:this={input}
+	on:input={handleInput}
 	on:blur
 	on:change
 	on:click
