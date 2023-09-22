@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
-	import { navigating } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import '../../app.postcss';
 	import type { PageData } from './$types';
@@ -15,6 +15,8 @@
 	let { supabase, session, profile } = data;
 	$: ({ supabase, session, profile } = data);
 
+	let oldPath = '';
+
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
@@ -26,10 +28,18 @@
 	});
 
 	const setupShortcuts = () => {
-		const elements = document.querySelectorAll('input, textarea');
-		elements.forEach((element) => {
-			element.addEventListener('focusin', () => ($shortcutsEnabledStore = false));
-			element.addEventListener('focusout', () => ($shortcutsEnabledStore = true));
+		const refreshInputs = () => {
+			const elements = document.querySelectorAll('input, textarea');
+			elements.forEach((element) => {
+				element.addEventListener('focusin', () => shortcutsEnabledStore.set(false));
+				element.addEventListener('focusout', () => shortcutsEnabledStore.set(true));
+			});
+		};
+
+		page.subscribe(({ url: { pathname } }) => {
+			if (oldPath == pathname) return;
+			refreshInputs();
+			oldPath = pathname;
 		});
 	};
 

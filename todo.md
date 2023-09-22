@@ -7,3 +7,4 @@
 - [ ] Display full picture on click
 - [ ] Listing page ui
 - [ ] Profile page ui
+- [x] Fix shortcuts
