@@ -1,7 +1,7 @@
 import cfetch from '$lib/cfetch';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, fetch }) => {
+export const load: LayoutServerLoad = async ({ params, fetch }) => {
 	const uid = params.uid;
 
 	const { data, error } = await cfetch(`/api/users/${uid}/profile?ignore-check`, 'GET', fetch);

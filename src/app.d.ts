@@ -25,6 +25,12 @@ declare global {
 		created_at: number;
 	};
 
+	type TBookmark = {
+		user_uid: string;
+		listing_uid: string;
+		created_at: number;
+	};
+
 	type TSupaProfile = Tables<'profiles'>;
 	type TSupaListing = Tables<'listings'>;
 
