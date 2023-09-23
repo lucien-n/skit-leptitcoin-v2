@@ -1,8 +1,9 @@
+import cfetch from '$lib/cfetch';
 import { getHeaders, getRouteExpiration } from '$lib/server/cache';
 import { redis } from '$lib/server/redis';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ locals: { supabase, uid }, setHeaders }) => {
+export const GET: RequestHandler = async ({ setHeaders, fetch, locals: { supabase, uid } }) => {
 	let headers = getHeaders('listings/listing');
 
 	const redisKey = 'listing:' + uid;
@@ -29,14 +30,19 @@ export const GET: RequestHandler = async ({ locals: { supabase, uid }, setHeader
 
 	if (!listingData) return new Response(null, { status: 204 });
 
-	const author_data = listingData.author;
+	const { data: authorData, error: authorError } = await cfetch<TProfile>(
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore: Supabase typing issue, uid is defined
+		`/api/users/${listingData.author.author_uid}/profile`,
+		'GET',
+		fetch
+	);
 
-	const author = {
-		// @ts-expect-error: Typescript for some reasons thinks that the returned object is a list
-		uid: author_data.author_uid || 'unknown',
-		// @ts-expect-error: Typescript for some reasons thinks that the returned object is a list
-		name: author_data.name || 'Unknown'
-	};
+	if (authorError || !(authorData.length > 0)) return new Response(null, { status: 404 });
+
+	const author: TProfile = authorData[0] as TProfile;
+
+	console.log(author);
 
 	const imageUrl = listingData.image_url;
 	const {

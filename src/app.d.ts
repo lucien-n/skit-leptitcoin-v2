@@ -12,10 +12,7 @@ declare global {
 
 	type TListing = {
 		uid: string;
-		author: {
-			uid: string;
-			name: string;
-		};
+		author: TProfile;
 		price: number;
 		title: string;
 		description: string;
@@ -24,8 +21,6 @@ declare global {
 		image_url: string;
 		created_at: number;
 	};
-
-	type TCompleteListing = TListing & { author: TProfile };
 
 	type TBookmark = {
 		user_uid: string;

@@ -5,7 +5,7 @@
 	import { formatDate } from '$lib/helper';
 	import { profileStore } from '$lib/stores';
 
-	export let listing: TCompleteListing;
+	export let listing: TListing;
 </script>
 
 <article class="flex h-full flex-col gap-5">
