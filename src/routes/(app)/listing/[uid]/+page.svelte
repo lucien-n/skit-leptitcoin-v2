@@ -3,6 +3,7 @@
 	import * as Alert from '$components/ui/alert';
 	import { profileStore } from '$lib/stores';
 	import type { PageServerData } from './$types';
+	import Listing from './listing.svelte';
 
 	export let data: PageServerData;
 
@@ -19,13 +20,6 @@
 		</Alert.Root>
 	{/if}
 	{#if listing}
-		{#each Object.entries(listing) as [key, value]}
-			<strong>{key}:</strong> {value} <br />
-		{/each}
-		{#if $profileStore}
-			<div class="self-end">
-				<Bookmark {listing} />
-			</div>
-		{/if}
+		<Listing {listing} />
 	{/if}
 {/await}

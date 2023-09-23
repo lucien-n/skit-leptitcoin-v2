@@ -22,14 +22,12 @@
 					/>
 				</Dialog.Trigger>
 				<Dialog.Content class="p-0">
-					{#if !listing.image_url.endsWith('null')}
-						<img
-							src={listing.image_url}
-							alt="listing {listing.title}"
-							class="rounded-l-md object-cover w-full"
-							loading="lazy"
-						/>
-					{/if}
+					<img
+						src={listing.image_url}
+						alt="listing {listing.title}"
+						class="rounded-l-md object-cover w-full"
+						loading="lazy"
+					/>
 				</Dialog.Content>
 			</Dialog.Root>
 		{:else}
