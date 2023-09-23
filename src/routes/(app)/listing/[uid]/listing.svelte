@@ -2,12 +2,18 @@
 	import Bookmark from '$components/lpc/bookmark.svelte';
 	import { profileStore } from '$lib/stores';
 	import * as Card from '$components/ui/card';
+	import ProfileCard from '$components/lpc/profile-card.svelte';
 
-	export let listing: TListing;
+	export let listing: TCompleteListing;
 </script>
 
 <Card.Root>
-	<Card.Header />
+	<Card.Header>
+		<div />
+		{#if listing.author}
+			<ProfileCard profile={listing.author} />
+		{/if}
+	</Card.Header>
 	<Card.Content>
 		{#each Object.entries(listing) as [key, value]}
 			<strong>{key}:</strong> {value} <br />

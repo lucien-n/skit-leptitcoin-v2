@@ -25,6 +25,8 @@ declare global {
 		created_at: number;
 	};
 
+	type TCompleteListing = TListing & { author: TProfile };
+
 	type TBookmark = {
 		user_uid: string;
 		listing_uid: string;

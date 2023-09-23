@@ -12,7 +12,7 @@
 	} = data;
 </script>
 
-{#await listingPromise then { data: [listing], error }}
+{#await listingPromise then { listing, error }}
 	{#if error}
 		<Alert.Root>
 			<Alert.Title class="font-semibold">Error</Alert.Title>
