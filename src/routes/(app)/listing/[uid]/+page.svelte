@@ -1,7 +1,5 @@
 <script lang="ts">
-	import Bookmark from '$components/lpc/bookmark.svelte';
 	import * as Alert from '$components/ui/alert';
-	import { profileStore } from '$lib/stores';
 	import type { PageServerData } from './$types';
 	import Listing from './listing.svelte';
 
@@ -12,7 +10,7 @@
 	} = data;
 </script>
 
-{#await listingPromise then { listing, error }}
+{#await listingPromise then { data: [listing], error }}
 	{#if error}
 		<Alert.Root>
 			<Alert.Title class="font-semibold">Error</Alert.Title>

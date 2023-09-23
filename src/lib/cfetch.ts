@@ -1,12 +1,12 @@
 export type Fetch = typeof fetch;
 
-const cfetch = async (
+const cfetch = async <T>(
 	url: string,
 	method: 'GET' | 'POST' | 'UPDATE' | 'DELETE' | 'PUT',
 	fetch: Fetch,
 	options?: object
 ): Promise<{
-	data: Array<never>;
+	data: T[];
 	error: string;
 	status: number;
 	statusText: string;
