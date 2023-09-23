@@ -18,7 +18,7 @@ export const uploadListingPicture = async (
 
 	const webpBlob = await srcToWebP(URL.createObjectURL(compressedImage), {});
 
-	const filePath = `${listingUid}.wepb`;
+	const filePath = `${listingUid}.webp`;
 	const wepbFile = new File([webpBlob], filePath, { type: 'image/webp' });
 
 	const { error } = await supabase.storage.from('listings').upload(filePath, wepbFile);
