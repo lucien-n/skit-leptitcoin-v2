@@ -48,6 +48,7 @@ export interface Database {
           created_at: string
           description: string
           image: boolean
+          is_validated: boolean
           price: number
           title: string
           uid: string
@@ -59,6 +60,7 @@ export interface Database {
           created_at?: string
           description: string
           image?: boolean
+          is_validated?: boolean
           price?: number
           title: string
           uid?: string
@@ -70,6 +72,7 @@ export interface Database {
           created_at?: string
           description?: string
           image?: boolean
+          is_validated?: boolean
           price?: number
           title?: string
           uid?: string
@@ -88,6 +91,7 @@ export interface Database {
           avatar_url: string | null
           created_at: string | null
           name: string
+          role: number
           uid: string
           updated_at: string | null
         }
@@ -95,6 +99,7 @@ export interface Database {
           avatar_url?: string | null
           created_at?: string | null
           name: string
+          role?: number
           uid: string
           updated_at?: string | null
         }
@@ -102,6 +107,7 @@ export interface Database {
           avatar_url?: string | null
           created_at?: string | null
           name?: string
+          role?: number
           uid?: string
           updated_at?: string | null
         }
