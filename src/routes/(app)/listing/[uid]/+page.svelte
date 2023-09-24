@@ -19,15 +19,20 @@
 		: null;
 </script>
 
-<article class="flex h-full flex-col gap-5">
-	<div class="flex flex-col md:flex-row gap-5">
+<article class="h-full gap-5 grid grid-rows-3">
+	<div class="flex flex-col md:flex-row gap-5 row-span-2">
 		<Card.Root class="w-full">
-			<Card.Header>
+			<Card.Header class="p-0 h-full">
 				{#if imageUrl}
-					<img class="mx-auto h-[50%] object-contain" src={imageUrl} alt={listing.title} />
+					<img
+						class="mx-auto object-contain rounded-md h-full"
+						src={imageUrl}
+						alt={listing.title}
+					/>
 				{:else}
 					<img
 						src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+						class="rounded-md h-full"
 						alt={listing.title}
 					/>
 				{/if}
@@ -56,7 +61,7 @@
 		</Card.Root>
 	</div>
 
-	<Card.Root class="h-full mb-2 ">
+	<Card.Root class="h-full">
 		<Card.Header>
 			<h1 class="font-semibold text-xl">
 				{listing.title}
@@ -66,12 +71,11 @@
 			{#each Object.entries(listing) as [key, value]}
 				<strong>{key}:</strong> {value} <br />
 			{/each}
+			{#if $profileStore}
+				<div class="self-end">
+					<Bookmark {listing} />
+				</div>
+			{/if}
 		</Card.Content>
 	</Card.Root>
 </article>
-
-{#if $profileStore}
-	<div class="self-end">
-		<Bookmark {listing} />
-	</div>
-{/if}
