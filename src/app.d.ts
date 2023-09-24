@@ -12,7 +12,10 @@ declare global {
 
 	type TListing = {
 		uid: string;
-		author: TProfile;
+		author: {
+			uid: string;
+			name: string;
+		};
 		price: number;
 		title: string;
 		description: string;

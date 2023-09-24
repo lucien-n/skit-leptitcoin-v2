@@ -1,9 +1,8 @@
-import cfetch from '$lib/cfetch';
 import { getHeaders, getRouteExpiration } from '$lib/server/cache';
 import { redis } from '$lib/server/redis';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ setHeaders, fetch, locals: { supabase, uid } }) => {
+export const GET: RequestHandler = async ({ setHeaders, locals: { supabase, uid } }) => {
 	let headers = getHeaders('listings/listing');
 
 	const redisKey = 'listing:' + uid;
@@ -30,28 +29,21 @@ export const GET: RequestHandler = async ({ setHeaders, fetch, locals: { supabas
 
 	if (!listingData) return new Response(null, { status: 204 });
 
-	const { data: authorData, error: authorError } = await cfetch<TProfile>(
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore: Supabase typing issue, uid is defined
-		`/api/users/${listingData.author.author_uid}/profile`,
-		'GET',
-		fetch
-	);
-
-	if (authorError || !(authorData.length > 0)) return new Response(null, { status: 404 });
-
-	const author: TProfile = authorData[0] as TProfile;
-
-	console.log(author);
-
 	const imageUrl = listingData.image_url;
 	const {
 		data: { publicUrl }
 	} = supabase.storage.from('listings').getPublicUrl(imageUrl);
 
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	const authorData: { author_uid: string; name: string } = listingData.author;
+
 	const listing = {
 		uid: listingData.uid,
-		author,
+		author: {
+			uid: authorData.author_uid,
+			name: authorData.name
+		},
 		price: listingData.price,
 		title: listingData.title,
 		description: listingData.description,
