@@ -65,33 +65,37 @@
 
 	<Card.Root class="h-fit">
 		<Card.Header>
-			<div class="flex gap-3 text-xl items-center">
-				<h1 class="font-semibold">
-					{listing.title}
-				</h1>
-				<span class="border px-2 py-1 rounded-md text-lg">
-					{listing.price}€
-				</span>
-			</div>
-			<div class="flex gap-2 items-center italic">
-				<ConditionBadge condition={listing.condition} />
-				<div class="flex gap-2 items-center italic opacity-70">
-					●
-					<p>{formatCategory(listing.category)}</p>
-					●
-					<p>Created {formatDate(listing.created_at)}</p>
+			<div class="flex justify-between">
+				<div class="flex flex-col gap-3">
+					<div class="flex gap-3 text-xl items-center">
+						<h1 class="font-semibold">
+							{listing.title}
+						</h1>
+						<span class="border px-2 py-1 rounded-md text-lg">
+							{listing.price}€
+						</span>
+					</div>
+					<div class="flex gap-2 items-center italic">
+						<ConditionBadge condition={listing.condition} />
+						<div class="flex gap-2 items-center italic opacity-70">
+							●
+							<p>{formatCategory(listing.category)}</p>
+							●
+							<p>Created {formatDate(listing.created_at)}</p>
+						</div>
+					</div>
 				</div>
+				{#if $profileStore}
+					<div>
+						<Bookmark {listing} />
+					</div>
+				{/if}
 			</div>
 		</Card.Header>
 		<Card.Content>
 			{#each listing.description.split('<br/>') as descriptionLine}
 				{descriptionLine}<br />
 			{/each}
-			{#if $profileStore}
-				<div class="self-end">
-					<Bookmark {listing} />
-				</div>
-			{/if}
 		</Card.Content>
 	</Card.Root>
 </article>
