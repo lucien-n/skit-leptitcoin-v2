@@ -75,12 +75,12 @@
 							{listing.price}€
 						</span>
 					</div>
-					<div class="flex gap-2 items-center italic">
+					<div class="flex flex-col md:flex-initial gap-2 md:items-center italic">
 						<ConditionBadge condition={listing.condition} />
-						<div class="flex gap-2 items-center italic opacity-70">
-							●
-							<p>{formatCategory(listing.category)}</p>
-							●
+						<div class="flex flex-col md:flex-initial gap-2 md:items-center italic opacity-70">
+							<span class="hidden md:flex">●</span>
+							<p>in {formatCategory(listing.category)}</p>
+							<span class="hidden md:flex">●</span>
 							<p>Created {formatDate(listing.created_at)}</p>
 						</div>
 					</div>
