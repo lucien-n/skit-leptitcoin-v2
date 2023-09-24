@@ -4,7 +4,7 @@
 	import * as Dialog from '$components/ui/dialog';
 	import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 	import { formatCategory, formatDate } from '$lib/helper';
-	import type { SupabaseClient } from '@supabase/supabase-js';
+	import { currentListingStore } from '$lib/stores';
 
 	export let listing: TListing;
 
@@ -44,7 +44,12 @@
 		{/if}
 	</Card.Header>
 	<Card.Content class="col-span-3 pl-2 p-3 flex-col flex justify-between h-full">
-		<a class="flex flex-col w-full h-full group hover:cursor-pointer" href="/listing/{listing.uid}">
+		<a
+			class="flex flex-col w-full h-full group hover:cursor-pointer"
+			href="/listing/{listing.uid}"
+			data-sveltekit-preload-data="off"
+			on:click={() => currentListingStore.set(listing)}
+		>
 			<h1 class="flex group-hover:text-primary font-semibold text-xl">
 				{listing.title}
 			</h1>
