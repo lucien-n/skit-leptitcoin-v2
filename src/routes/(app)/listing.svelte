@@ -2,20 +2,24 @@
 	import ConditionBadge from '$components/lpc/condition-badge.svelte';
 	import * as Card from '$components/ui/card';
 	import * as Dialog from '$components/ui/dialog';
+	import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 	import { formatCategory, formatDate } from '$lib/helper';
+	import type { SupabaseClient } from '@supabase/supabase-js';
 
 	export let listing: TListing;
 
-	$: isImageNull = listing.image_url.endsWith('null');
+	$: imageUrl = listing.image
+		? `${PUBLIC_SUPABASE_URL}/storage/v1/object/public/listings/${listing.uid}.webp`
+		: null;
 </script>
 
 <Card.Root class="grid grid-cols-5 h-40 md:h-64">
 	<Card.Header class="p-0 col-span-2">
-		{#if !isImageNull}
+		{#if imageUrl}
 			<Dialog.Root>
 				<Dialog.Trigger class="w-full">
 					<img
-						src={listing.image_url}
+						src={imageUrl}
 						alt="listing {listing.title}"
 						class="rounded-l-md object-cover h-40 md:h-64 w-full"
 						loading="lazy"
@@ -23,7 +27,7 @@
 				</Dialog.Trigger>
 				<Dialog.Content class="p-0">
 					<img
-						src={listing.image_url}
+						src={imageUrl}
 						alt="listing {listing.title}"
 						class="rounded-l-md object-cover w-full"
 						loading="lazy"

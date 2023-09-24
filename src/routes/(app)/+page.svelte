@@ -9,7 +9,7 @@
 
 	export let data;
 
-	let { fetch } = data;
+	const { fetch } = data;
 
 	let getListings: Promise<TListing[]>;
 

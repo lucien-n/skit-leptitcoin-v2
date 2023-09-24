@@ -11,19 +11,19 @@ export interface Database {
     Tables: {
       bookmarks: {
         Row: {
-          create_at: string
+          created_at: string
           listing_uid: string
-          profile_uid: string
+          user_uid: string
         }
         Insert: {
-          create_at?: string
+          created_at?: string
           listing_uid: string
-          profile_uid: string
+          user_uid: string
         }
         Update: {
-          create_at?: string
+          created_at?: string
           listing_uid?: string
-          profile_uid?: string
+          user_uid?: string
         }
         Relationships: [
           {
@@ -33,8 +33,8 @@ export interface Database {
             referencedColumns: ["uid"]
           },
           {
-            foreignKeyName: "bookmarks_profile_uid_fkey"
-            columns: ["profile_uid"]
+            foreignKeyName: "bookmarks_user_uid_fkey"
+            columns: ["user_uid"]
             referencedRelation: "profiles"
             referencedColumns: ["uid"]
           }
@@ -47,7 +47,7 @@ export interface Database {
           condition: number
           created_at: string
           description: string
-          image_url: string | null
+          image: boolean
           price: number
           title: string
           uid: string
@@ -58,7 +58,7 @@ export interface Database {
           condition: number
           created_at?: string
           description: string
-          image_url?: string | null
+          image?: boolean
           price?: number
           title: string
           uid?: string
@@ -69,7 +69,7 @@ export interface Database {
           condition?: number
           created_at?: string
           description?: string
-          image_url?: string | null
+          image?: boolean
           price?: number
           title?: string
           uid?: string
@@ -119,7 +119,13 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      delete_storage_object: {
+        Args: {
+          bucket: string
+          object: string
+        }
+        Returns: Record<string, unknown>
+      }
     }
     Enums: {
       [_ in never]: never

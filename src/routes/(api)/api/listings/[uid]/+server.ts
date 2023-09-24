@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({ setHeaders, locals: { supabase, uid 
 	const query = supabase
 		.from('listings')
 		.select(
-			'uid, price, title, description, category, condition, image_url, created_at, author:profiles(author_uid:uid, name)'
+			'uid, price, title, description, category, condition, image, created_at, author:profiles(author_uid:uid, name)'
 		)
 		.match({ uid });
 
@@ -28,11 +28,6 @@ export const GET: RequestHandler = async ({ setHeaders, locals: { supabase, uid 
 	const listingData = data?.[0];
 
 	if (!listingData) return new Response(null, { status: 204 });
-
-	const imageUrl = listingData.image_url;
-	const {
-		data: { publicUrl }
-	} = supabase.storage.from('listings').getPublicUrl(imageUrl);
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
@@ -50,7 +45,7 @@ export const GET: RequestHandler = async ({ setHeaders, locals: { supabase, uid 
 		category: listingData.category,
 		condition: listingData.condition,
 		created_at: listingData.created_at,
-		image_url: publicUrl
+		image: listingData.image
 	} satisfies TListing;
 
 	redis.set(redisKey, JSON.stringify(listing), 'EX', getRouteExpiration('listings/listing'));
