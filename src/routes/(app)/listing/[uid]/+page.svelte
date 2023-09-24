@@ -84,7 +84,9 @@
 			</div>
 		</Card.Header>
 		<Card.Content>
-			{listing.description}
+			{#each listing.description.split('<br/>') as descriptionLine}
+				{descriptionLine}<br />
+			{/each}
 			{#if $profileStore}
 				<div class="self-end">
 					<Bookmark {listing} />

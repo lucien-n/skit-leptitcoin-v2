@@ -45,7 +45,7 @@
 		(selectedConditionLabel = label);
 </script>
 
-<Form.Root schema={newSchema} {form} let:config>
+<Form.Root schema={newSchema} {form} let:config debug>
 	<form method="POST" use:enhance={handleSubmit} class="flex flex-col gap-2">
 		<Form.Field {config} name="title">
 			<Form.Item>

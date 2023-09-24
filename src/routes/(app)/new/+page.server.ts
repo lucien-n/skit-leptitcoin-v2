@@ -27,7 +27,7 @@ export const actions: Actions = {
 		if (!session) return fail(401, { error: 'You must be signed in' });
 
 		const title = form.data.title;
-		const description = form.data.description;
+		const description = form.data.description.replaceAll('\n', '<br/>');
 		const category = form.data.category;
 		const condition = form.data.condition;
 		const price = form.data.price;
@@ -55,10 +55,7 @@ export const actions: Actions = {
 
 		if (!uid) return fail(500, { error: 'Error in listing creation. Try again later' });
 
-		await supabase
-			.from('listings')
-			.update({ image_url: `${uid}.wepb` })
-			.match({ uid });
+		await supabase.from('listings').update({ image: true }).match({ uid });
 
 		return {
 			uid
