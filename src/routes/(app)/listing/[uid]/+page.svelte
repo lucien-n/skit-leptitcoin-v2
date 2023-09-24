@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Bookmark from '$components/lpc/bookmark.svelte';
+	import ConditionBadge from '$components/lpc/condition-badge.svelte';
 	import * as Avatar from '$components/ui/avatar';
+	import Badge from '$components/ui/badge/badge.svelte';
 	import * as Card from '$components/ui/card';
 	import { PUBLIC_SUPABASE_URL } from '$env/static/public';
-	import { formatDate } from '$lib/helper';
+	import { formatCategory, formatDate } from '$lib/helper';
 	import { profileStore } from '$lib/stores';
 	import type { PageData } from './$types';
 
@@ -61,16 +63,28 @@
 		</Card.Root>
 	</div>
 
-	<Card.Root class="h-full">
+	<Card.Root class="h-fit">
 		<Card.Header>
-			<h1 class="font-semibold text-xl">
-				{listing.title}
-			</h1>
+			<div class="flex gap-3 text-xl items-center">
+				<h1 class="font-semibold">
+					{listing.title}
+				</h1>
+				<span class="border px-2 py-1 rounded-md text-lg">
+					{listing.price}€
+				</span>
+			</div>
+			<div class="flex gap-2 items-center italic">
+				<ConditionBadge condition={listing.condition} />
+				<div class="flex gap-2 items-center italic opacity-70">
+					●
+					<p>{formatCategory(listing.category)}</p>
+					●
+					<p>Created {formatDate(listing.created_at)}</p>
+				</div>
+			</div>
 		</Card.Header>
 		<Card.Content>
-			{#each Object.entries(listing) as [key, value]}
-				<strong>{key}:</strong> {value} <br />
-			{/each}
+			{listing.description}
 			{#if $profileStore}
 				<div class="self-end">
 					<Bookmark {listing} />
