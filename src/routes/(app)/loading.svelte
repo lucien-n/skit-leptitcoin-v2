@@ -2,14 +2,16 @@
 	import { slide } from 'svelte/transition';
 </script>
 
-<div transition:slide={{ duration: 200 }} class="w-full h-2 bg-primary overflow-x-hidden">
-	<div id="indeterminate-progress" class="h-full w-full bg-white rounded-full" />
+<div
+	transition:slide={{ duration: 200 }}
+	class="w-full h-2 bg-primary overflow-x-hidden fixed flex"
+>
+	<div id="progress-bar" class="h-full w-full bg-white rounded-full blur-lg" />
 </div>
 
 <style>
-	#indeterminate-progress {
+	#progress-bar {
 		animation: progress-animation 2s linear infinite;
-		filter: blur(16px);
 	}
 
 	@keyframes progress-animation {
