@@ -38,7 +38,7 @@
 	<div class="relative w-full">
 		<Input
 			type="text"
-			placeholder={$searchingStore ? 'Searching...' : 'Search'}
+			placeholder="Search"
 			class="w-full"
 			bind:value
 			on:input={handleInput}

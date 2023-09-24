@@ -6,7 +6,7 @@
 	import type { PageData } from './$types';
 	import Loading from './loading.svelte';
 	import MainNav from './main-nav.svelte';
-	import { shortcutsEnabledStore, titleStore } from '$lib/stores';
+	import { searchingStore, shortcutsEnabledStore, titleStore } from '$lib/stores';
 	import { setTitle } from '$lib/helper';
 	import { PREFIX as SITE_NAME } from '$lib/constants';
 
@@ -53,7 +53,7 @@
 	<title>{$titleStore || SITE_NAME}</title>
 </svelte:head>
 
-{#if $navigating}
+{#if $navigating || $searchingStore}
 	<Loading />
 {/if}
 
