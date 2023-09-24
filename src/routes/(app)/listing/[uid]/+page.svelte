@@ -44,7 +44,13 @@
 		<Card.Root class="whitespace-nowrap h-fit">
 			<Card.Header class="px-3 py-2">
 				{#await authorPromise}
-					<p>Fetching author</p>
+					<div class="w-72 flex">
+						<div class="w-16 h-16 animate-pulse rounded-full" />
+						<div class="flex flex-col p-2 w-full">
+							<div class="animate-pulse w-24" />
+							<div class="animate-pulse w-32" />
+						</div>
+					</div>
 				{:then { data: [author] }}
 					{#if author}
 						<div class="flex gap-2">
