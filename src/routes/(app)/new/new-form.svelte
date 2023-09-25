@@ -44,7 +44,7 @@
 		(selectedConditionLabel = label);
 </script>
 
-<Form.Root schema={newSchema} {form} let:config debug>
+<Form.Root schema={newSchema} {form} let:config>
 	<form method="POST" use:enhance={handleSubmit} class="flex flex-col gap-2">
 		<Form.Field {config} name="title">
 			<Form.Item>
@@ -81,7 +81,7 @@ One little scratch on the left side"
 		<Form.Field {config} name="price">
 			<Form.Item>
 				<Form.Label>Price</Form.Label>
-				<Form.Input type="number" placeholder="€" min={0} max={99999} required />
+				<Form.InputNumber placeholder="€" min={0} max={99999} required />
 				<Form.Validation />
 			</Form.Item>
 		</Form.Field>

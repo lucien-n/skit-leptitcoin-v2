@@ -57,9 +57,9 @@
 	<Loading />
 {/if}
 
-<main class="w-full h-screen overflow-x-hidden flex flex-col gap-y-2">
+<main class="w-full h-full overflow-x-hidden flex flex-col gap-y-2">
 	<MainNav {session} {profile} />
-	<section class="container">
+	<section class="container h-full">
 		<slot />
 	</section>
 </main>

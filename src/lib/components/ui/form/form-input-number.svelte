@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getFormField } from 'formsnap';
 	import type { HTMLInputAttributes } from 'svelte/elements';
-	import { Input, type InputEvents } from '$lib/components/ui/input';
+	import { InputNumber, type InputEvents } from '$lib/components/ui/input/';
 
 	type $$Props = HTMLInputAttributes;
 	type $$Events = InputEvents;
@@ -9,7 +9,7 @@
 	const { attrStore, value } = getFormField();
 </script>
 
-<Input
+<InputNumber
 	{...$attrStore}
 	{...$$restProps}
 	bind:value={$value}

@@ -9,6 +9,30 @@
 	let className: $$Props['class'] = undefined;
 	export let value: $$Props['value'] = undefined;
 	export { className as class };
+
+	function handleInput(event: Event) {
+		const target = event.target as HTMLInputElement;
+
+		if (target.value == '') {
+			value = 0;
+			return;
+		}
+
+		if (isNaN(parseFloat(target.value))) {
+			event.preventDefault();
+			return;
+		}
+
+		value = +target.value;
+	}
+
+	let input: HTMLElement;
+
+	export const I = {
+		focus() {
+			input.focus();
+		}
+	};
 </script>
 
 <input
@@ -17,6 +41,8 @@
 		className
 	)}
 	bind:value
+	bind:this={input}
+	on:input={handleInput}
 	on:blur
 	on:change
 	on:click

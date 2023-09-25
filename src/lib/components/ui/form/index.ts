@@ -4,6 +4,7 @@ import * as SelectComp from '$lib/components/ui/select';
 import type { Writable } from 'svelte/store';
 import Item from './form-item.svelte';
 import Input from './form-input.svelte';
+import InputNumber from './form-input-number.svelte';
 import Textarea from './form-textarea.svelte';
 import Description from './form-description.svelte';
 import Label from './form-label.svelte';
@@ -35,6 +36,7 @@ export {
 	Field,
 	Item,
 	Input,
+	InputNumber,
 	Label,
 	Button,
 	Switch,
@@ -58,6 +60,7 @@ export {
 	Field as FormField,
 	Item as FormItem,
 	Input as FormInput,
+	InputNumber as FormInputNumber,
 	Textarea as FormTextarea,
 	Description as FormDescription,
 	Label as FormLabel,

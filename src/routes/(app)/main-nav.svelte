@@ -25,7 +25,7 @@
 		<NavSearch />
 		<div class="flex items-center space-x-1 md:space-x-2">
 			{#if session && profile}
-				<NavLink href="/new">
+				<NavLink href="/new" variant="primary">
 					<svelte:fragment slot="icon">
 						<PlusIcon />
 					</svelte:fragment>
@@ -34,7 +34,7 @@
 				<Separator orientation="vertical" />
 				<NavUserDropdown {profile} />
 			{:else}
-				<NavLink href="/auth">
+				<NavLink href="/auth" variant="primary">
 					<svelte:fragment slot="icon">
 						<LogInIcon />
 					</svelte:fragment>
