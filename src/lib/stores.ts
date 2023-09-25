@@ -98,4 +98,4 @@ const createCurrentListingStore = (): currentListingStore => {
 
 export const currentListingStore = createCurrentListingStore();
 
-export const currentScrollStore = writable<number>(0)
+export const currentScrollStore = writable<number>(0);

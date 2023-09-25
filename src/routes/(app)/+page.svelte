@@ -60,7 +60,7 @@
 
 <section class="flex flex-col h-full gap-2" bind:this={section}>
 	{#await getListings}
-		{#each { length: 10 } as i}
+		{#each { length: 10 } as _}
 			<ListingSkeleton />
 		{/each}
 	{:then listings}

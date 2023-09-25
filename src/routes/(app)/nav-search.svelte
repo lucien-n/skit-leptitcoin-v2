@@ -4,7 +4,7 @@
 	import Shortcut from '$components/lpc/shortcut.svelte';
 	import Input from '$components/ui/input/input.svelte';
 	import { searchingStore } from '$lib/stores';
-	import { Loader2Icon, Search, Settings2 } from 'lucide-svelte';
+	import { Loader2Icon, Search } from 'lucide-svelte';
 	import type { EventHandler, FormEventHandler } from 'svelte/elements';
 	import NavSearchFilters from './nav-search-filters.svelte';
 

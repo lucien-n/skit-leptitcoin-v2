@@ -2,7 +2,6 @@
 	import Bookmark from '$components/lpc/bookmark.svelte';
 	import ConditionBadge from '$components/lpc/condition-badge.svelte';
 	import * as Avatar from '$components/ui/avatar';
-	import Badge from '$components/ui/badge/badge.svelte';
 	import * as Card from '$components/ui/card';
 	import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 	import { formatCategory, formatDate } from '$lib/helper';
