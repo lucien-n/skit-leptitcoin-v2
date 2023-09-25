@@ -4,15 +4,26 @@
 	import * as Alert from '$components/ui/alert';
 	import * as Card from '$components/ui/card';
 	import * as Tabs from '$components/ui/tabs';
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import SigninForm from './signin-form.svelte';
 	import SignupForm from './signup-form.svelte';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 	export let form: any;
 
+	let value: string = 'signup';
+
 	const gotoHome = () => {
 		if (browser) goto('/', { invalidateAll: true, replaceState: true });
+	};
+
+	onMount(() => (value = $page.url.searchParams.get('mode') || 'signup'));
+
+	const onValueChange = (val: any) => {
+		$page.url.searchParams.set('mode', val);
+		if (browser) goto($page.url);
 	};
 </script>
 
@@ -25,7 +36,7 @@
 			</Alert.Root>
 		{/if}
 
-		<Tabs.Root value="signup" class="">
+		<Tabs.Root bind:value {onValueChange}>
 			<Tabs.List class="grid w-full grid-cols-2">
 				<Tabs.Trigger value="signup">Sign Up</Tabs.Trigger>
 				<Tabs.Trigger value="signin">Sign In</Tabs.Trigger>
