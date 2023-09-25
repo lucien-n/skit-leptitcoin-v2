@@ -7,6 +7,7 @@ declare global {
 		uid: string;
 		name: string;
 		avatar_url: string;
+		role: number;
 		created_at: number;
 	};
 

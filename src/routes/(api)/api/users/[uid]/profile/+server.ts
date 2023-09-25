@@ -28,7 +28,7 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params, setHea
 
 	const query = supabase
 		.from('profiles')
-		.select('uid, name, created_at, avatar_url')
+		.select('uid, name, role, avatar_url, created_at')
 		.match(uid ? { uid } : { name });
 
 	const { data, error }: DbResult<typeof query> = await query;
@@ -43,6 +43,7 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params, setHea
 		uid: profile_data.uid,
 		name: profile_data.name,
 		avatar_url: profile_data.avatar_url,
+		role: profile_data.role,
 		created_at: profile_data.created_at
 	} satisfies TProfile;
 

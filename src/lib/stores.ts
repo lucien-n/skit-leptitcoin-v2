@@ -97,3 +97,5 @@ const createCurrentListingStore = (): currentListingStore => {
 };
 
 export const currentListingStore = createCurrentListingStore();
+
+export const currentScrollStore = writable<number>(0);

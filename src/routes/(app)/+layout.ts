@@ -24,7 +24,11 @@ export const load = async ({ fetch, data, depends }) => {
 
 	let profile: TProfile | null = null;
 	if (session) {
-		const { data, error } = await cfetch(`/api/users/${session?.user.id}/profile`, 'GET', fetch);
+		const { data, error } = await cfetch<TProfile>(
+			`/api/users/${session?.user.id}/profile`,
+			'GET',
+			fetch
+		);
 		if (data || !error) profile = data[0];
 	}
 	profileStore.set(profile);

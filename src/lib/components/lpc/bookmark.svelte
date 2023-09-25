@@ -12,9 +12,9 @@
 	let createdAt: number;
 
 	onMount(async () => {
-		const { data } = await cfetch(url, 'GET', fetch);
+		const { data } = await cfetch<TBookmark>(url, 'GET', fetch);
 		isBookmarked = data.length > 0;
-		createdAt = data?.[0];
+		createdAt = data?.[0].created_at;
 	});
 
 	export const handleClick = async () => {

@@ -4,7 +4,7 @@
 
 <div
 	transition:slide={{ duration: 200 }}
-	class="w-full h-2 bg-primary overflow-x-hidden fixed flex"
+	class="w-full h-2 bg-primary overflow-x-hidden fixed top-0 z-10"
 >
 	<div id="progress-bar" class="h-full w-full bg-white rounded-full blur-lg" />
 </div>

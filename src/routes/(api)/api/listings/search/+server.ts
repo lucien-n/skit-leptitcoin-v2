@@ -59,23 +59,21 @@ export const GET: RequestHandler = async ({
 
 	if (!uids) return new Response(null, { status: 204 });
 
-	const listings: TListing[] = [];
+	let listings: TListing[] = [];
 
-	for (const uid of uids) {
-		const url = `/api/listings/${uid}`;
-		const res = await fetch(url);
+	const url = `/api/listings/${uids.join(';')}?ignore-check`;
+	const res = await fetch(url);
 
-		if (!res.ok) continue;
+	if (res.status == 200) {
+		try {
+			const { data } = await res.json();
 
-		const { data } = await res.json();
+			if (!data) return new Response(null, { status: 204 });
 
-		if (!data) continue;
-
-		const listing = data[0];
-
-		if (!(listing satisfies TListing)) continue;
-
-		listings.push(listing);
+			if (data satisfies TListing[]) listings = data;
+		} catch (e) {
+			/* empty */
+		}
 	}
 
 	setHeaders(headers);

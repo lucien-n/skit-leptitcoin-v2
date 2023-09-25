@@ -7,7 +7,7 @@ import type { Handle, RequestEvent } from '@sveltejs/kit';
 export const handle: Handle = async ({ event, resolve }) => {
 	const { locals, params, url }: RequestEvent = event;
 
-	event.locals.supabase = createSupabaseServerClient({
+	locals.supabase = createSupabaseServerClient({
 		supabaseUrl: PUBLIC_SUPABASE_URL,
 		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
 		event
@@ -29,6 +29,23 @@ export const handle: Handle = async ({ event, resolve }) => {
 				});
 			locals.uid = uid;
 		}
+	}
+
+	if (url.pathname.startsWith('/admin')) {
+		const session = await locals.getSession();
+		if (!session)
+			return new Response(null, {
+				status: 401
+			});
+
+		const { data, error } = await locals.supabase
+			.from('profiles')
+			.select('role')
+			.match({ user_uid: session.user.id });
+		if (error || !(data.length > 0) || data[0].role < 8)
+			return new Response(null, {
+				status: 401
+			});
 	}
 
 	return resolve(event, {
