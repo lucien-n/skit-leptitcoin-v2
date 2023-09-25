@@ -5,12 +5,16 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { createEventDispatcher } from 'svelte';
+	import Button from '$components/ui/button/button.svelte';
+	import { Eye, EyeOff } from 'lucide-svelte';
 
 	export let form: SuperValidated<SigninSchema>;
 
 	const dispatch = createEventDispatcher();
 
 	let loading = false;
+
+	let showPassword: boolean = false;
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
@@ -35,7 +39,27 @@
 		<Form.Field {config} name="password">
 			<Form.Item>
 				<Form.Label>Password</Form.Label>
-				<Form.Input type="password" minlength={8} maxlength={255} placeholder="●●●●●●●●" />
+				<div class="relative">
+					<Form.Input
+						type={showPassword ? 'text' : 'password'}
+						minlength={8}
+						maxlength={255}
+						placeholder="●●●●●●●●"
+					/>
+					<Button
+						class="absolute top-0 right-0"
+						variant="ghost"
+						type="button"
+						aria-label="toggle show password"
+						on:click={() => (showPassword = !showPassword)}
+					>
+						{#if showPassword}
+							<EyeOff />
+						{:else}
+							<Eye />
+						{/if}
+					</Button>
+				</div>
 				<Form.Validation />
 			</Form.Item>
 		</Form.Field>
