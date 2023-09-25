@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
 	import { navigating, page } from '$app/stores';
+	import { PREFIX as SITE_NAME } from '$lib/constants';
+	import { setTitle } from '$lib/helper';
+	import { searchingStore, shortcutsEnabledStore, titleStore } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import '../../app.postcss';
 	import type { PageData } from './$types';
 	import Loading from './loading.svelte';
 	import MainNav from './main-nav.svelte';
-	import { searchingStore, shortcutsEnabledStore, titleStore } from '$lib/stores';
-	import { setTitle } from '$lib/helper';
-	import { PREFIX as SITE_NAME } from '$lib/constants';
 
 	export let data: PageData;
 
@@ -57,9 +57,9 @@
 	<Loading />
 {/if}
 
-<main class="w-full h-full overflow-hidden flex flex-col gap-y-2">
+<main class="w-full h-screen overflow-x-hidden flex flex-col gap-y-2">
 	<MainNav {session} {profile} />
-	<section class="container h-full overflow-y-scroll">
+	<section class="container">
 		<slot />
 	</section>
 </main>

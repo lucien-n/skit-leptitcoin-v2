@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import ListingPictureUpload from '$components/lpc/listing-picture-upload.svelte';
 	import * as Form from '$components/ui/form';
 	import * as Select from '$components/ui/select';
 	import { CATEGORIES, CONDITIONS } from '$lib/constants';
-	import type { Condition, Subcategory } from '$lib/types';
+	import type { SupabaseClient } from '@supabase/supabase-js';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { createEventDispatcher } from 'svelte';
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { newSchema, type NewSchema } from './schema';
-	import ListingPictureUpload from '$components/lpc/listing-picture-upload.svelte';
-	import type { SupabaseClient } from '@supabase/supabase-js';
 
 	export let form: SuperValidated<NewSchema>;
 	export let supabase: SupabaseClient;

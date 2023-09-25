@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { profileStore } from '$lib/stores';
 	import { LogOutIcon, UserIcon } from 'lucide-svelte';
 
 	export let profile: TProfile;
@@ -19,6 +20,11 @@
 			<DropdownMenu.Item class="p-0">
 				<a href="/profile/{profile.name}/bookmarks" class="w-full px-3 py-2">Bookmarks</a>
 			</DropdownMenu.Item>
+			{#if $profileStore && $profileStore.role >= 8}
+				<DropdownMenu.Item class="p-0">
+					<a href="/admin/dashboard" class="w-full px-3 py-2">Dashboard</a>
+				</DropdownMenu.Item>
+			{/if}
 			<DropdownMenu.Item class="p-0">
 				<a
 					href="/auth/signout"

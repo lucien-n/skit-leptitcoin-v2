@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import * as Alert from '$components/ui/alert';
 	import cfetch from '$lib/cfetch';
 	import { SEARCH_COOLDOWN } from '$lib/constants';
-	import { searchingStore } from '$lib/stores';
+	import { currentScrollStore, searchingStore } from '$lib/stores';
 	import ListingSkeleton from './listing-skeleton.svelte';
 	import Listing from './listing.svelte';
 
@@ -14,6 +16,8 @@
 	let getListings: Promise<TListing[]>;
 
 	let timeoutSet: boolean = false;
+
+	let section: HTMLElement;
 
 	const filterListings = async (): Promise<TListing[]> => {
 		searchingStore.set(true);
@@ -44,14 +48,25 @@
 			timeoutSet = false;
 		}, SEARCH_COOLDOWN);
 	});
+
+	beforeNavigate(() => {
+		if (browser) currentScrollStore.set(section.scrollTop);
+	});
+
+	const setScroll = () => {
+		if (browser && section) section.scrollTop = $currentScrollStore;
+	};
 </script>
 
-<section class="flex flex-col h-full gap-2">
+<section class="flex flex-col h-full gap-2" bind:this={section}>
 	{#await getListings}
-		{#each { length: 8 } as i}
+		{#each { length: 10 } as _}
 			<ListingSkeleton />
 		{/each}
 	{:then listings}
+		<span class="hidden">
+			{setScroll()}
+		</span>
 		{#if listings && listings.length > 0}
 			{#each listings as listing}
 				<Listing {listing} />
