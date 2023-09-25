@@ -1,8 +1,10 @@
 import Root from './input.svelte';
+import RootNumber from './input-number.svelte';
 
 type FormInputEvent<T extends Event = Event> = T & {
 	currentTarget: EventTarget & HTMLInputElement;
 };
+
 export type InputEvents = {
 	blur: FormInputEvent<FocusEvent>;
 	change: FormInputEvent<Event>;
@@ -20,6 +22,8 @@ export type InputEvents = {
 
 export {
 	Root,
+	RootNumber,
 	//
-	Root as Input
+	Root as Input,
+	RootNumber as InputNumber
 };
