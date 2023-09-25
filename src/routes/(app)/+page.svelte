@@ -1,14 +1,13 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import * as Alert from '$components/ui/alert';
 	import cfetch from '$lib/cfetch';
 	import { SEARCH_COOLDOWN } from '$lib/constants';
 	import { currentScrollStore, searchingStore } from '$lib/stores';
-	import { onMount } from 'svelte';
 	import ListingSkeleton from './listing-skeleton.svelte';
 	import Listing from './listing.svelte';
-	import { browser } from '$app/environment';
 
 	export let data;
 
@@ -59,7 +58,7 @@
 	};
 </script>
 
-<section class="flex flex-col h-full gap-2 overflow-y-scroll" bind:this={section}>
+<section class="flex flex-col h-full gap-2" bind:this={section}>
 	{#await getListings}
 		{#each { length: 10 } as i}
 			<ListingSkeleton />
