@@ -34,11 +34,11 @@
 				<Separator orientation="vertical" />
 				<NavUserDropdown {profile} />
 			{:else}
-				<NavLink href="/auth">
+				<NavLink href="/auth" class="px-3 py-2 rounded-md bg-primary ">
 					<svelte:fragment slot="icon">
-						<LogInIcon />
+						<LogInIcon color="White" />
 					</svelte:fragment>
-					<span class="hidden md:flex"> Sign In </span>
+					<span class="hidden md:flex text-white"> Sign In </span>
 				</NavLink>
 			{/if}
 		</div>
