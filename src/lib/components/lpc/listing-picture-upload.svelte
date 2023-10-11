@@ -5,11 +5,14 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let supabase: SupabaseClient;
+	export let selected: boolean = false;
 
 	let isUploading = false;
 	let files: FileList;
 	let url: string | undefined;
 	let isFocused: boolean = false;
+
+	$: selected = files && files.length === 1;
 
 	const dispatch = createEventDispatcher();
 

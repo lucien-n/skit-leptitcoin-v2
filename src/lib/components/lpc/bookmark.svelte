@@ -1,5 +1,5 @@
 <script lang="ts">
-	import cfetch from '$lib/cfetch';
+	import { cfetch } from '$lib/cfetch';
 	import { Bookmark, BookmarkCheck, BookmarkMinus } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 
@@ -12,17 +12,17 @@
 	let createdAt: number;
 
 	onMount(async () => {
-		const { data } = await cfetch<TBookmark>(url, 'GET', fetch);
-		isBookmarked = data.length > 0;
-		createdAt = data?.[0].created_at;
+		const { data } = await cfetch<TBookmark[]>(url, 'GET', fetch);
+		isBookmarked = !!data && data.length > 0;
+		createdAt = data?.[0].created_at || 0;
 	});
 
 	export const handleClick = async () => {
 		if (isBookmarked) {
-			const { status } = await cfetch(url, 'DELETE', fetch);
+			const { status } = await cfetch<null>(url, 'DELETE', fetch);
 			isBookmarked = !(status == 204);
 		} else {
-			const { status } = await cfetch(url, 'POST', fetch);
+			const { status } = await cfetch<null>(url, 'POST', fetch);
 			isBookmarked = status == 201;
 		}
 	};

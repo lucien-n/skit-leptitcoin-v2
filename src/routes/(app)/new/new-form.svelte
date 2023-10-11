@@ -22,6 +22,7 @@
 
 	let loading: boolean = false;
 	let created: boolean = false;
+	let pictureSelected: boolean = false;
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
@@ -123,7 +124,13 @@ One little scratch on the left side"
 				<Form.Validation />
 			</Form.Item>
 		</Form.Field>
-		<ListingPictureUpload bind:this={uploadPictureComp} {supabase} />
-		<Form.Button class="pt-2" disabled={loading}>{loading ? 'Creating' : 'Create'}</Form.Button>
+		<ListingPictureUpload
+			bind:this={uploadPictureComp}
+			{supabase}
+			bind:selected={pictureSelected}
+		/>
+		<Form.Button disabled={loading || !pictureSelected} class="pt-2"
+			>{loading ? 'Creating' : 'Create'}</Form.Button
+		>
 	</form>
 </Form.Root>

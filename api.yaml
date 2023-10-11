@@ -1,0 +1,59 @@
+openapi: 3.0.0
+
+info: 
+  title: LePtitCoin API
+  description: API documentation for [LePtitCoin](https://github.com/lucien-neuhoff/skit-leptitcoin-v2)
+  version: 1.0.9
+
+servers:
+  - url: http://leptitcoin-v2.lucienn.dev/api
+    description: Main server
+
+paths:
+  /users/{uid}/profile:
+    get:
+      summary: Returns user profile
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: The user's id
+          schema:
+            type: string
+            pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+            minLength: 36
+            maxLength: 36
+      responses:
+        '200':
+          description: An array of profiles 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    maxItems: 10
+                    items:
+                      type: object
+                      properties:
+                        uid: 
+                          type: string
+                          pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+                        name:
+                          type: string
+                          pattern: ^[A-z]{3, 24}$
+                        avatar_url:
+                          type: string
+                          pattern: ^https?://
+                        role:
+                          type: number
+                        created_at:
+                          type: number
+                  error:
+                    type: string
+        '404':
+          description: profile not found
+        default:
+          description: Unexpected error
+          

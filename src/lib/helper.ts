@@ -3,8 +3,8 @@ import { CATEGORIES, PREFIX } from './constants';
 import { titleStore } from './stores';
 import type { Subcategory } from './types';
 
-export const formatDate = (date_value: Date | number | string): string => {
-	const date = new Date(date_value);
+export const formatDate = (dateValue: Date | number | string): string => {
+	const date = new Date(dateValue);
 
 	const now = new Date();
 	const yesterday = new Date();
