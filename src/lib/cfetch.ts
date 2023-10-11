@@ -1,16 +1,20 @@
 export type Fetch = typeof fetch;
 
+export type CFetchResponse<T> = {
+	data: T;
+	error: string;
+	status: number;
+	statusText: string;
+};
+
+export type CFetchPromise<T> = Promise<CFetchResponse<T | null>>;
+
 export const cfetch = async <T>(
 	url: string,
 	method: 'GET' | 'POST' | 'UPDATE' | 'DELETE' | 'PUT',
 	fetch: Fetch,
 	options?: RequestInit
-): Promise<{
-	data: T | null;
-	error: string;
-	status: number;
-	statusText: string;
-}> => {
+): CFetchPromise<T> => {
 	const res = await fetch(url, { method, ...options });
 
 	if (!res.ok) {
@@ -43,12 +47,3 @@ export const cfetch = async <T>(
 };
 
 export type CFetch = typeof cfetch;
-
-export type CFetchResponse<T> = {
-	data: T;
-	error: string;
-	status: number;
-	statusText: string;
-};
-
-export type CFetchPromise<T> = Promise<CFetchResponse<T | null>>;

@@ -23,7 +23,7 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params, setHea
 	if (cached) {
 		const ttl = await redis.ttl(redisKey);
 		headers = { 'Cache-Control': `max-age=${ttl}` };
-		return new Response(JSON.stringify({ data: [JSON.parse(cached)] }), { status: 200 });
+		return new Response(JSON.stringify({ data: JSON.parse(cached) }), { status: 200 });
 	}
 
 	const query = supabase
@@ -57,5 +57,5 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params, setHea
 			getRouteExpiration('users/profile')
 		);
 
-	return new Response(JSON.stringify({ data: [profile] }), { status: 200 });
+	return new Response(JSON.stringify({ data: profile }), { status: 200 });
 };
