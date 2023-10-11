@@ -1,5 +1,5 @@
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import cfetch from '$lib/cfetch.js';
+import { cfetch } from '$lib/cfetch.js';
 import { profileStore } from '$lib/stores.js';
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
 
@@ -24,12 +24,12 @@ export const load = async ({ fetch, data, depends }) => {
 
 	let profile: TProfile | null = null;
 	if (session) {
-		const { data, error } = await cfetch<TProfile>(
+		const { data, error } = await cfetch<TProfile[]>(
 			`/api/users/${session?.user.id}/profile`,
 			'GET',
 			fetch
 		);
-		if (data || !error) profile = data[0];
+		if (data && !error) profile = data[0];
 	}
 	profileStore.set(profile);
 

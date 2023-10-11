@@ -3,7 +3,7 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import * as Alert from '$components/ui/alert';
-	import cfetch from '$lib/cfetch';
+	import { cfetch } from '$lib/cfetch';
 	import { SEARCH_COOLDOWN } from '$lib/constants';
 	import { currentScrollStore, searchingStore } from '$lib/stores';
 	import ListingSkeleton from './listing-skeleton.svelte';
@@ -28,10 +28,10 @@
 
 		searchParams.forEach((value, key) => url.searchParams.set(key, value));
 
-		const { data, error } = await cfetch(url.toString(), 'GET', fetch);
+		const { data, error } = await cfetch<TListing[]>(url.toString(), 'GET', fetch);
 		if (error) throw error;
 
-		const listings = data as TListing[];
+		const listings = data || [];
 
 		searchingStore.set(false);
 

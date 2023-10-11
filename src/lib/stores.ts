@@ -1,6 +1,6 @@
 import { writable, type Invalidator, type Subscriber } from 'svelte/store';
 import type { Fetch } from './cfetch';
-import cfetch from './cfetch';
+import { cfetch } from './cfetch';
 
 type ProfileStore = {
 	subscribe: (

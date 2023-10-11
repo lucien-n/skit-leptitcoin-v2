@@ -1,4 +1,4 @@
-import cfetch from '$lib/cfetch';
+import { cfetch } from '$lib/cfetch';
 import { currentListingStore } from '$lib/stores';
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
