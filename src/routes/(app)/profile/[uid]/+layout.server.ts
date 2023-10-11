@@ -10,14 +10,14 @@ export const load: LayoutServerLoad = async ({ params, fetch }) => {
 		fetch
 	);
 
-	const profile_data = data?.[0];
+	const profileData = data?.[0];
 
-	if (!profile_data)
+	if (!profileData)
 		return {
 			error: 'No data found for profile'
 		};
 
-	const profile = profile_data as TProfile;
+	const profile = profileData as TProfile;
 
 	return {
 		profile,

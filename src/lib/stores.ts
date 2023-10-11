@@ -21,11 +21,11 @@ type currentListingStore = {
 const createCurrentListingStore = (): currentListingStore => {
 	const { subscribe, set, update } = writable<TListing | null>(null);
 
-	const is = (compared_uid: string) => {
+	const is = (comparedUid: string) => {
 		let isSelf = false;
 
 		subscribe((listing) => {
-			if (listing) isSelf = listing.uid === compared_uid;
+			if (listing) isSelf = listing.uid === comparedUid;
 		});
 
 		return isSelf;
