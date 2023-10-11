@@ -33,14 +33,14 @@ const getSupaProfile = async (
 	if (error) return { error: 'Internal Server Error', status };
 	if (!data?.[0]) return { status: 204 };
 
-	const profile_data = data?.[0];
+	const profileData = data?.[0];
 
 	const profile = {
-		uid: profile_data.uid,
-		name: profile_data.name,
-		avatar_url: profile_data.avatar_url,
-		role: profile_data.role,
-		created_at: profile_data.created_at
+		uid: profileData.uid,
+		name: profileData.name,
+		avatar_url: profileData.avatar_url,
+		role: profileData.role,
+		created_at: profileData.created_at
 	} satisfies TProfile;
 
 	return { profile, error, status };
@@ -57,17 +57,16 @@ const cacheSupaProfile = async (supaProfile: TProfile) => {
 };
 
 export const GET: RequestHandler = async ({ locals: { supabase }, params }) => {
-	const uid_or_username = params.uid as string;
+	const uidOrUsername = params.uid as string;
 
 	let uid = '';
 	let name = '';
 
-	if (uid_or_username.length === 36) uid = uid_or_username;
-	else name = uid_or_username;
+	if (uidOrUsername.length === 36) uid = uidOrUsername;
+	else name = uidOrUsername;
 
 	const { profile: cachedProfile } = await getCachedProfile({ uid, name });
-	if (cachedProfile)
-		return new Response(JSON.stringify({ data: [cachedProfile] }), { status: 200 });
+	if (cachedProfile) return new Response(JSON.stringify({ data: cachedProfile }), { status: 200 });
 
 	const { profile: supaProfile, error, status } = await getSupaProfile(supabase, { uid, name });
 	if (error) return new Response(JSON.stringify({ error }), { status });
@@ -75,5 +74,5 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params }) => {
 
 	await cacheSupaProfile(supaProfile);
 
-	return new Response(JSON.stringify({ data: [supaProfile] }), { status: 200 });
+	return new Response(JSON.stringify({ data: supaProfile }), { status: 200 });
 };

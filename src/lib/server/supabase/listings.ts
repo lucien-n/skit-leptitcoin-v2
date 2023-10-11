@@ -7,7 +7,7 @@ export function isListing(obj: unknown): obj is TListing {
 
 		return (
 			'uid' in obj &&
-			'uid' in author &&
+			'author_uid' in author &&
 			'name' in author &&
 			'price' in obj &&
 			'title' in obj &&
@@ -22,11 +22,11 @@ export function isListing(obj: unknown): obj is TListing {
 }
 
 export const parseListing = (data: unknown): TListing | null => {
+	if (!isListing(data)) return null;
+
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	const authorData: { author_uid: string; name: string } = data.author;
-
-	if (!isListing(data)) return null;
 
 	const listing = {
 		uid: data.uid,

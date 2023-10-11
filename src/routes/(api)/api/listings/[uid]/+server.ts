@@ -30,7 +30,7 @@ const getSupaBookmarkedListings = async (
 	const query = supabase
 		.from('listings')
 		.select(
-			'uid, price, title, description, category, condition, image, created_at, author:profiles(uid:uid, name)'
+			'uid, price, title, description, category, condition, image, created_at, author:profiles(author_uid:uid, name)'
 		)
 		.match({ is_validated: true })
 		.in('uid', uids)

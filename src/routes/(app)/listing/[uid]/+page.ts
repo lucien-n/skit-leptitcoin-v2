@@ -11,8 +11,8 @@ export const load: PageLoad = async ({ params, fetch }) => {
 	if (currentListingStore.is(uid))
 		listing = currentListingStore.get() as TListing; // will always return a listing
 	else {
-		const { data, error } = await cfetch<TListing>(`/api/listings/${uid}`, 'GET', fetch);
-		if (!error && data) listing = data;
+		const { data, error } = await cfetch<TListing[]>(`/api/listings/${uid}`, 'GET', fetch);
+		if (!error && data) listing = data[0];
 		else throw redirect(303, '/');
 	}
 
