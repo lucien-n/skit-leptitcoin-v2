@@ -47,7 +47,6 @@ export const parseListing = (data: unknown): TListing | null => {
 };
 
 export const parseListings = (data: unknown[] | undefined): TListing[] => {
-	console.log(data?.length);
 	if (!data || data.length === 0) return [];
 
 	const listings: TListing[] = [];
@@ -55,7 +54,6 @@ export const parseListings = (data: unknown[] | undefined): TListing[] => {
 		const parsed = parseListing(listingData);
 		if (parsed) listings.push(parsed);
 	}
-	console.log(listings.length);
 
 	return listings;
 };
