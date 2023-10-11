@@ -41,7 +41,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const { data, error } = await locals.supabase
 			.from('profiles')
 			.select('role')
-			.match({ user_uid: session.user.id });
+			.match({ uid: session.user.id });
 		if (error || !(data.length > 0) || data[0].role < 8)
 			return new Response(null, {
 				status: 401
