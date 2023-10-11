@@ -34,7 +34,8 @@ const getSupaBookmarkedListings = async (
 		)
 		.match({ is_validated: true })
 		.in('uid', uids)
-		.range(offset, limit + offset);
+		.range(offset, limit + offset)
+		.order('created_at', { ascending: false });
 
 	const { data, error, status }: DbResult<typeof query> = await query;
 
@@ -63,7 +64,6 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params: { uid 
 	const limit = 10;
 
 	const { listings: cachedListings, uids: remainingUids } = await getCachedBookmarkedListings(uids);
-
 	if (remainingUids.length == 0)
 		return new Response(JSON.stringify({ data: cachedListings }), { status: 200 });
 
@@ -78,5 +78,8 @@ export const GET: RequestHandler = async ({ locals: { supabase }, params: { uid 
 
 	await cacheSupaListings(supaListings);
 
-	return new Response(JSON.stringify({ data: supaListings }), { status: 200 });
+	const listings = [...supaListings, ...cachedListings];
+	listings.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+	return new Response(JSON.stringify({ data: listings }), { status: 200 });
 };
