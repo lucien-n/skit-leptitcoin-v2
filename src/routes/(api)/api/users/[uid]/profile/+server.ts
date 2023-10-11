@@ -49,7 +49,7 @@ const getSupaProfile = async (
 const cacheSupaProfile = async (supaProfile: TProfile) => {
 	if (supaProfile.name && checkUid(supaProfile.uid))
 		redis.set(
-			`supaProfile:${supaProfile.uid}|${supaProfile.name}`,
+			`profile:${supaProfile.uid}|${supaProfile.name}`,
 			JSON.stringify(supaProfile),
 			'EX',
 			getRouteExpiration('users/profile')
