@@ -3,22 +3,34 @@
 	import * as Table from '$lib/components/ui/table';
 	import { fly } from 'svelte/transition';
 	import type { PageData, PageServerData } from './$types';
+	import { Trash } from 'lucide-svelte';
 
 	export let data: PageServerData & PageData;
 
 	const { listings, error, supabase } = data;
 
 	let getListings: TListing[] = [];
-	let validatedUids: string[] = [];
+	let validatedListinsgUids: string[] = [];
+	let deletedListingsUids: string[] = [];
 
 	const validateListing = async (uid: string) => {
 		const { data: success } = await supabase.rpc('validate_listing', { listing_uid: uid });
-		if (success) validatedUids.push(uid);
+		if (success) validatedListinsgUids.push(uid);
+		getListings = filterListings();
+	};
+
+	const deleteListing = async (uid: string) => {
+		const { data: success } = await supabase.rpc('delete_listing', { listing_uid: uid });
+		if (success) deletedListingsUids.push(uid);
 		getListings = filterListings();
 	};
 
 	const filterListings = () => {
-		return listings?.filter(({ uid }) => !validatedUids.includes(uid)) || [];
+		return (
+			listings?.filter(
+				({ uid }) => !validatedListinsgUids.includes(uid) && !deletedListingsUids.includes(uid)
+			) || []
+		);
 	};
 
 	getListings = filterListings();
@@ -53,8 +65,11 @@
 					<Table.Cell class="font-medium">{listing.price}</Table.Cell>
 					<Table.Cell class="font-medium">{listing.category}</Table.Cell>
 					<Table.Cell class="font-medium">{listing.condition}</Table.Cell>
-					<Table.Cell class="font-medium">
+					<Table.Cell class="font-medium flex gap-2">
 						<Button variant="default" on:click={() => validateListing(listing.uid)}>Validate</Button
+						>
+						<Button class="p-2" variant="destructive" on:click={() => deleteListing(listing.uid)}
+							><Trash /></Button
 						>
 					</Table.Cell>
 				</Table.Row>
