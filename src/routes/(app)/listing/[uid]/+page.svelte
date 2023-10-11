@@ -5,13 +5,13 @@
 	import * as Card from '$components/ui/card';
 	import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 	import { formatCategory, formatDate } from '$lib/helper';
-	import { profileStore } from '$lib/stores';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
 	const {
 		listing,
+		session,
 		streamed: { authorPromise }
 	} = data;
 
@@ -50,7 +50,7 @@
 							<div class="animate-pulse w-32" />
 						</div>
 					</div>
-				{:then { data: [author] }}
+				{:then { data: author }}
 					{#if author}
 						<div class="flex gap-2">
 							<Avatar.Root class="w-16 h-16">
@@ -90,7 +90,7 @@
 						</div>
 					</div>
 				</div>
-				{#if $profileStore}
+				{#if session}
 					<div>
 						<Bookmark {listing} />
 					</div>
